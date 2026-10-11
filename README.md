@@ -114,6 +114,16 @@ El informe para público no técnico es `informe_nile_prime.pdf` (en el reposito
 consolida las métricas en `reports/metrics/resumen.json` y necesita Edge o Chrome instalados (la
 variable `NP_CHROME` indica la ruta si no lo encuentra).
 
+## Datos y fuentes
+Los archivos de `data/raw/` y `agent.py` no se modifican; se incluyen para que los notebooks se
+puedan ejecutar sin descargar nada.
+
+- **Reseñas** (`Reseñas Películas.csv`): corresponden al conjunto *IMDB 50K Movie Reviews* (Large
+  Movie Review Dataset; Maas et al., 2011, Stanford).
+- **Metadatos** (`Metadatos Películas.csv`): corresponden al conjunto *IMDB Top 1000* (Kaggle).
+- **Interacciones** (`interacciones.csv`) y **`agent.py`**: proporcionados por IMMUNE Technology
+  Institute para el caso práctico.
+
 ## Modelos externos
 El notebook 01 usa modelos públicos de Hugging Face, que se descargan solos la primera vez:
 

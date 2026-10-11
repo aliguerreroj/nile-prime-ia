@@ -334,7 +334,7 @@
         "T07"
       ],
       "criterios_aceptacion": [
-        "reports/metrics/resumen.json consolida las métricas finales de los 4 retos a partir de los JSON de cada notebook (\"modo\": \"full\"), sin cifras copiadas a mano; lo genera `python reports/informe/build_informe.py` (script del asesor de Ali: se integra, no se reescribe; usa Edge/Chrome headless y la variable NP_CHROME para indicar la ruta si no lo encuentra)",
+        "reports/metrics/resumen.json consolida las métricas finales de los 4 retos a partir de los JSON de cada notebook (\"modo\": \"full\"), sin cifras copiadas a mano; lo genera `python reports/informe/build_informe.py` (el script del informe se mantiene aparte: se integra sin reescribirlo; usa Edge/Chrome headless y la variable NP_CHROME para indicar la ruta si no lo encuentra)",
         "jinja2 está fijado en requirements.txt",
         "reports/figures/INDICE.md lista cada figura con su notebook de origen y el mensaje de negocio que transmite",
         "Las figuras comparten paleta, idioma (español) y dpi=150",
@@ -359,7 +359,7 @@
         "T08"
       ],
       "criterios_aceptacion": [
-        "El informe se genera con `python reports/informe/build_informe.py` a partir de reports/informe/plantilla.html.j2 (ambos del asesor de Ali: se integran, no se reescriben ni se rediseñan)",
+        "El informe se genera con `python reports/informe/build_informe.py` a partir de reports/informe/plantilla.html.j2 (el script y la plantilla del informe se mantienen aparte; se integran sin reescribirlos ni rediseñarlos)",
         "El informe cubre los 4 retos con gráficos, tablas y conclusiones basadas en el análisis",
         "Lenguaje no técnico: cada reto explica el problema de negocio, qué se hizo, el resultado y la recomendación",
         "Todas las cifras salen de reports/metrics/resumen.json (consolidado desde los JSON de los notebooks)",
