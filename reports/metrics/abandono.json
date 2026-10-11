@@ -1,0 +1,1427 @@
+{
+  "modo": "full",
+  "config": {
+    "semilla": 42,
+    "particion": {
+      "esquema": "GroupShuffleSplit por usuario 60/20/20",
+      "train": {
+        "filas": 60187,
+        "usuarios": 6000
+      },
+      "validacion": {
+        "filas": 20244,
+        "usuarios": 2000
+      },
+      "test": {
+        "filas": 20192,
+        "usuarios": 2000
+      },
+      "sin_duplicados": true,
+      "titulos_unicos": true
+    },
+    "features": {
+      "numericas": [
+        "Runtime",
+        "Released_Year",
+        "IMDB_Rating",
+        "No_of_Votes",
+        "Meta_score"
+      ],
+      "generos_multi_hot": 21,
+      "edad_one_hot": 3,
+      "interacciones_edad_x_genero": 63,
+      "tasa_abandono_titulo": {
+        "tipo": "target encoding out-of-fold por usuario",
+        "suavizado_m": 20,
+        "n_splits": 5
+      },
+      "imputacion_meta_score": "mediana (dentro del Pipeline)",
+      "tasa_abandono_usuario": "NO se usa (fuga / no existe en train con partición por usuario)"
+    },
+    "busqueda_cv": {
+      "metodo": "RandomizedSearchCV",
+      "cv": "StratifiedGroupKFold(3, shuffle)",
+      "agrupado_por": "User_ID",
+      "scoring": "roc_auc",
+      "n_iter": 20,
+      "espacio": {
+        "n_estimators": [
+          100,
+          200,
+          300
+        ],
+        "max_depth": [
+          4,
+          6,
+          8,
+          12
+        ],
+        "min_samples_leaf": [
+          10,
+          25,
+          50,
+          100
+        ],
+        "max_features": [
+          "sqrt",
+          0.3,
+          0.5
+        ],
+        "max_samples": [
+          0.3,
+          0.6,
+          null
+        ],
+        "class_weight": [
+          "balanced",
+          "balanced_subsample"
+        ]
+      },
+      "combinaciones_totales": 864,
+      "roc_auc_cv_mejor": 0.5204654966625193,
+      "roc_auc_cv_rango": [
+        0.5101278465465783,
+        0.5204654966625193
+      ]
+    },
+    "hiperparametros": {
+      "n_estimators": 200,
+      "min_samples_leaf": 100,
+      "max_samples": 0.6,
+      "max_features": "sqrt",
+      "max_depth": 12,
+      "class_weight": "balanced_subsample"
+    },
+    "modelo": "Pipeline(ColumnTransformer + RandomForestClassifier)",
+    "calibracion": {
+      "elegida": "isotonica",
+      "brier_validacion_oof": {
+        "sin calibrar": 0.2420715017369237,
+        "sigmoide": 0.09122220257939175,
+        "isotonica": 0.09114931218726187
+      },
+      "brier_referencia_prevalencia_validacion": 0.09128774937742788
+    },
+    "n_bootstrap": 1000,
+    "bootstrap": "por usuario (grupos), percentil 95 %",
+    "n_permutaciones": 100,
+    "versiones": {
+      "python": "3.13.9",
+      "scikit-learn": "1.7.2",
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "scipy": "1.18.1"
+    },
+    "hardware": {
+      "nucleos_logicos": 16,
+      "n_jobs": 16
+    }
+  },
+  "baseline": {
+    "nombre": "DummyClassifier(strategy='prior')",
+    "metricas": {
+      "roc_auc": {
+        "valor": 0.5,
+        "ic95": [
+          0.5,
+          0.5
+        ]
+      },
+      "pr_auc": {
+        "valor": 0.10182250396196514,
+        "ic95": [
+          0.09776520084676386,
+          0.10640791863505657
+        ]
+      },
+      "brier": {
+        "valor": 0.09145617738816435,
+        "ic95": [
+          0.08823504799554363,
+          0.09509657929097273
+        ]
+      }
+    },
+    "regresion_logistica": {
+      "roc_auc": {
+        "valor": 0.52273838048536,
+        "ic95": [
+          0.5094702389492378,
+          0.5361826858855242
+        ]
+      },
+      "pr_auc": {
+        "valor": 0.11984279516024374,
+        "ic95": [
+          0.1121650744654731,
+          0.1299964444704053
+        ]
+      },
+      "brier": {
+        "valor": 0.24818325268912042,
+        "ic95": [
+          0.24756023664360077,
+          0.24885634113866845
+        ]
+      }
+    },
+    "mejora_modelo_final": {
+      "diferencia_roc_auc_vs_dummy": {
+        "diferencia": 0.022676295529325374,
+        "ic95": [
+          0.009509156783733727,
+          0.0360815797269986
+        ]
+      },
+      "diferencia_pr_auc_vs_dummy": {
+        "diferencia": 0.013757338856761572,
+        "ic95": [
+          0.008438698970998245,
+          0.020965888760413658
+        ]
+      },
+      "diferencia_roc_auc_vs_regresion_logistica": {
+        "diferencia": -6.208495603465813e-05,
+        "ic95": [
+          -0.010498780043686713,
+          0.011510083024805533
+        ]
+      },
+      "diferencia_pr_auc_vs_regresion_logistica": {
+        "diferencia": -0.004262952341517023,
+        "ic95": [
+          -0.010058112531375887,
+          0.000527289414863298
+        ]
+      },
+      "n_test": 20192
+    }
+  },
+  "metricas": {
+    "roc_auc": {
+      "valor": 0.5226762955293254,
+      "ic95": [
+        0.5095091567837338,
+        0.5360815797269985
+      ]
+    },
+    "pr_auc": {
+      "valor": 0.11557984281872671,
+      "ic95": [
+        0.10870456092131153,
+        0.12479329472837547
+      ]
+    },
+    "f1": {
+      "valor": 0.012206572769953052,
+      "ic95": [
+        0.005718717982149633,
+        0.018895211000474157
+      ]
+    },
+    "recall": {
+      "valor": 0.00632295719844358,
+      "ic95": [
+        0.002959031181243001,
+        0.009832709730425899
+      ]
+    },
+    "brier": {
+      "valor": 0.09138860787546456,
+      "ic95": [
+        0.0881513602777984,
+        0.0949892926280381
+      ]
+    }
+  },
+  "metricas_extra": {
+    "precision_al_umbral_costo": {
+      "valor": 0.17567567567567569,
+      "ic95": [
+        0.08857990506329116,
+        0.2714610389610389
+      ]
+    },
+    "pr_auc_referencia_azar_prevalencia": 0.10182250396196514,
+    "brier_referencia_prevalencia": {
+      "valor": 0.09145617738816435,
+      "ic95": [
+        0.08823504799554363,
+        0.09509657929097273
+      ]
+    },
+    "brier_sin_calibrar": {
+      "valor": 0.24253954234206632,
+      "ic95": [
+        0.2421294102027633,
+        0.24298233966527671
+      ]
+    },
+    "umbral_f2": {
+      "umbral": 0.01,
+      "f1": {
+        "valor": 0.18490871481248314,
+        "ic95": [
+          0.17817273991036559,
+          0.1924343708334775
+        ]
+      },
+      "recall": {
+        "valor": 1.0,
+        "ic95": [
+          1.0,
+          1.0
+        ]
+      },
+      "precision": {
+        "valor": 0.1018729560994946,
+        "ic95": [
+          0.0977989207961041,
+          0.10646051690996523
+        ]
+      }
+    },
+    "costo_esperado_test": {
+      "umbral_costo": 0.3065570522979398,
+      "umbral_f2": 0.8976822503961965,
+      "no_marcar": 0.30546751188589544,
+      "marcar_a_todos": 0.8981774960380349
+    }
+  },
+  "umbral": {
+    "valor": 0.25,
+    "justificacion": "Umbral que minimiza el costo esperado en VALIDACIÓN sobre probabilidades calibradas (isotonica), con C_FN=3 (no detectar a un usuario que abandonará: pérdida de engagement y riesgo de baja) y C_FP=1 (acción de retención innecesaria pero barata), confirmados por Ali; regla de Bayes: marcar si p > 0.25. Desempate hacia el umbral de Bayes. DEGENERA: el modelo no tiene señal, la probabilidad calibrada es ≈ π para todos y la política óptima es no marcar a (casi) nadie (F1 y recall ≈ 0 por construcción); marcar a todos solo compensaría con razones FN:FP > (1-π)/π ≈ 8.8.",
+    "costos": {
+      "C_FP": 1.0,
+      "C_FN": 3.0,
+      "umbral_bayes": 0.25
+    },
+    "degenera": true,
+    "costo_validacion": 0.3034973325429757,
+    "costo_no_marcar_validacion": 0.3048310610551275,
+    "costo_marcar_a_todos_validacion": 0.8983896463149575,
+    "razon_equilibrio_marcar_a_todos": 8.841516771998055,
+    "umbral_f2": 0.01,
+    "pct_marcados_umbral_f2_validacion": 0.9990614503062636,
+    "sensibilidad": {
+      "1:1": {
+        "umbral": 0.51,
+        "umbral_bayes": 0.5,
+        "costo": 0.10161035368504248,
+        "pct_marcados": 0.0,
+        "costo_marcar_a_todos": 0.8983896463149575,
+        "costo_no_marcar": 0.10161035368504248
+      },
+      "2:1": {
+        "umbral": 0.29000000000000004,
+        "umbral_bayes": 0.3333333333333333,
+        "costo": 0.20312191266548113,
+        "pct_marcados": 0.0036060067180399133,
+        "costo_marcar_a_todos": 0.8983896463149575,
+        "costo_no_marcar": 0.20322070737008496
+      },
+      "3:1 (base)": {
+        "umbral": 0.25,
+        "umbral_bayes": 0.25,
+        "costo": 0.3034973325429757,
+        "pct_marcados": 0.0036060067180399133,
+        "costo_marcar_a_todos": 0.8983896463149575,
+        "costo_no_marcar": 0.3048310610551275
+      },
+      "5:1": {
+        "umbral": 0.2,
+        "umbral_bayes": 0.16666666666666666,
+        "costo": 0.5042481722979648,
+        "pct_marcados": 0.0036060067180399133,
+        "costo_marcar_a_todos": 0.8983896463149575,
+        "costo_no_marcar": 0.5080517684252124
+      }
+    }
+  },
+  "prueba_permutacion": {
+    "auc_observado_validacion": 0.5208288498740425,
+    "n_permutaciones": 100,
+    "auc_nulo_media": 0.5028836629154274,
+    "auc_nulo_sd": 0.008495663014204683,
+    "auc_nulo_ic95": [
+      0.4862674445269729,
+      0.5176818617389232
+    ],
+    "auc_nulo_max": 0.5219547856668336,
+    "p_valor": 0.019801980198019802,
+    "nulo": "etiquetas de train barajadas por fila; mismo pipeline e hiperparámetros; AUC en validación con etiquetas reales",
+    "auc_dummy": 0.5
+  },
+  "modelos_test": {
+    "Random Forest (calibrado)": {
+      "roc_auc": {
+        "valor": 0.5207306763725522,
+        "ic95": [
+          0.5079248594922565,
+          0.5334271577120329
+        ]
+      },
+      "pr_auc": {
+        "valor": 0.11197779402018086,
+        "ic95": [
+          0.10617858504670859,
+          0.12023581447664107
+        ]
+      },
+      "brier": {
+        "valor": 0.09138860787546456,
+        "ic95": [
+          0.0881513602777984,
+          0.0949892926280381
+        ]
+      }
+    },
+    "Random Forest (sin calibrar)": {
+      "roc_auc": {
+        "valor": 0.5226762955293254,
+        "ic95": [
+          0.5095091567837338,
+          0.5360815797269985
+        ]
+      },
+      "pr_auc": {
+        "valor": 0.11557984281872671,
+        "ic95": [
+          0.10870456092131153,
+          0.12479329472837547
+        ]
+      },
+      "brier": {
+        "valor": 0.24253954234206632,
+        "ic95": [
+          0.2421294102027633,
+          0.24298233966527671
+        ]
+      }
+    },
+    "Regresión logística": {
+      "roc_auc": {
+        "valor": 0.52273838048536,
+        "ic95": [
+          0.5094702389492378,
+          0.5361826858855242
+        ]
+      },
+      "pr_auc": {
+        "valor": 0.11984279516024374,
+        "ic95": [
+          0.1121650744654731,
+          0.1299964444704053
+        ]
+      },
+      "brier": {
+        "valor": 0.24818325268912042,
+        "ic95": [
+          0.24756023664360077,
+          0.24885634113866845
+        ]
+      }
+    },
+    "Dummy (prior)": {
+      "roc_auc": {
+        "valor": 0.5,
+        "ic95": [
+          0.5,
+          0.5
+        ]
+      },
+      "pr_auc": {
+        "valor": 0.10182250396196514,
+        "ic95": [
+          0.09776520084676386,
+          0.10640791863505657
+        ]
+      },
+      "brier": {
+        "valor": 0.09145617738816435,
+        "ic95": [
+          0.08823504799554363,
+          0.09509657929097273
+        ]
+      }
+    }
+  },
+  "validacion": {
+    "roc_auc": {
+      "Dummy (prior)": 0.5,
+      "Regresión logística": 0.5238206710018126,
+      "Random Forest": 0.5208288498740425
+    }
+  },
+  "importancias": {
+    "impurity_top": [
+      {
+        "variable": "tasa_abandono_titulo",
+        "impurity": 0.14476
+      },
+      {
+        "variable": "Runtime",
+        "impurity": 0.10861
+      },
+      {
+        "variable": "No_of_Votes",
+        "impurity": 0.10787
+      },
+      {
+        "variable": "Released_Year",
+        "impurity": 0.09636
+      },
+      {
+        "variable": "Meta_score",
+        "impurity": 0.08072
+      },
+      {
+        "variable": "IMDB_Rating",
+        "impurity": 0.05309
+      },
+      {
+        "variable": "ag_youth_Drama",
+        "impurity": 0.0187
+      },
+      {
+        "variable": "g_Crime",
+        "impurity": 0.01842
+      },
+      {
+        "variable": "g_Comedy",
+        "impurity": 0.01374
+      },
+      {
+        "variable": "g_Drama",
+        "impurity": 0.0132
+      }
+    ],
+    "permutation_validacion_top": [
+      {
+        "variable": "ag_youth_Drama",
+        "media": 0.00555,
+        "sd": 0.00129
+      },
+      {
+        "variable": "g_Crime",
+        "media": 0.00251,
+        "sd": 0.00138
+      },
+      {
+        "variable": "tasa_abandono_titulo",
+        "media": 0.00182,
+        "sd": 0.00316
+      },
+      {
+        "variable": "ag_seniors_Family",
+        "media": 0.00126,
+        "sd": 0.00058
+      },
+      {
+        "variable": "g_Adventure",
+        "media": 0.001,
+        "sd": 0.00045
+      },
+      {
+        "variable": "edad_seniors",
+        "media": 0.00098,
+        "sd": 0.00027
+      },
+      {
+        "variable": "edad_youth",
+        "media": 0.00097,
+        "sd": 0.00056
+      },
+      {
+        "variable": "ag_youth_Adventure",
+        "media": 0.00087,
+        "sd": 0.00017
+      },
+      {
+        "variable": "ag_youth_History",
+        "media": 0.00068,
+        "sd": 0.00026
+      },
+      {
+        "variable": "g_Family",
+        "media": 0.00064,
+        "sd": 0.00025
+      }
+    ],
+    "n_variables_permutation_significativas_2sd": 16,
+    "n_repeticiones": 5
+  },
+  "senal_sembrada": {
+    "modelo_generativo": "logit = b0 + k*(0.8*z(Runtime) + 0.9*youth_Action - 0.9*seniors_Comedy)",
+    "prevalencia_objetivo": 0.10251135426294188,
+    "hiperparametros": "los de la busqueda sobre datos reales (sin repetir)",
+    "por_intensidad": {
+      "0.0": {
+        "prevalencia": 0.10170636931914175,
+        "roc_auc_rf": {
+          "valor": 0.5021479658986536,
+          "ic95": [
+            0.48928003281420834,
+            0.5151327574526245
+          ]
+        },
+        "roc_auc_oraculo": {
+          "valor": 0.5,
+          "ic95": [
+            0.5,
+            0.5
+          ]
+        },
+        "pr_auc_rf": {
+          "valor": 0.1033074232704376,
+          "ic95": [
+            0.09777904159085134,
+            0.10979233454283227
+          ]
+        },
+        "diferencia_rf_menos_oraculo": {
+          "diferencia": 0.0021479658986536254,
+          "ic95": [
+            -0.010719967185791645,
+            0.015132757452624598
+          ]
+        },
+        "permutation_top": [],
+        "posicion_variables_sembradas": {}
+      },
+      "0.5": {
+        "prevalencia": 0.10219333551971219,
+        "roc_auc_rf": {
+          "valor": 0.6390579971816392,
+          "ic95": [
+            0.6263541755669789,
+            0.6506444381021144
+          ]
+        },
+        "roc_auc_oraculo": {
+          "valor": 0.646397053689173,
+          "ic95": [
+            0.6340378213673945,
+            0.658222005842511
+          ]
+        },
+        "pr_auc_rf": {
+          "valor": 0.17544139016244975,
+          "ic95": [
+            0.16408119680932656,
+            0.18789314633721427
+          ]
+        },
+        "diferencia_rf_menos_oraculo": {
+          "diferencia": -0.007339056507533748,
+          "ic95": [
+            -0.01206587002256945,
+            -0.002821437593871659
+          ]
+        },
+        "permutation_top": [
+          {
+            "variable": "Runtime",
+            "media": 0.0459,
+            "sd": 0.00472
+          },
+          {
+            "variable": "tasa_abandono_titulo",
+            "media": 0.004,
+            "sd": 0.00098
+          },
+          {
+            "variable": "ag_seniors_Comedy",
+            "media": 0.00389,
+            "sd": 0.0009
+          },
+          {
+            "variable": "g_Comedy",
+            "media": 0.0018,
+            "sd": 0.00041
+          },
+          {
+            "variable": "ag_youth_Action",
+            "media": 0.00142,
+            "sd": 0.00086
+          },
+          {
+            "variable": "No_of_Votes",
+            "media": 0.00064,
+            "sd": 0.00049
+          },
+          {
+            "variable": "g_History",
+            "media": 0.00052,
+            "sd": 4e-05
+          },
+          {
+            "variable": "ag_seniors_Animation",
+            "media": 0.00045,
+            "sd": 7e-05
+          }
+        ],
+        "posicion_variables_sembradas": {
+          "Runtime": 1,
+          "ag_youth_Action": 5,
+          "ag_seniors_Comedy": 3
+        }
+      },
+      "1.0": {
+        "prevalencia": 0.10256104469157151,
+        "roc_auc_rf": {
+          "valor": 0.7470474740991501,
+          "ic95": [
+            0.7355129262686971,
+            0.7582741942858786
+          ]
+        },
+        "roc_auc_oraculo": {
+          "valor": 0.7532195904015314,
+          "ic95": [
+            0.742259190600677,
+            0.7641972103279888
+          ]
+        },
+        "pr_auc_rf": {
+          "valor": 0.3033158493362645,
+          "ic95": [
+            0.28571707440056326,
+            0.324277901684497
+          ]
+        },
+        "diferencia_rf_menos_oraculo": {
+          "diferencia": -0.0061721163023813475,
+          "ic95": [
+            -0.009365436701416506,
+            -0.003134118200313943
+          ]
+        },
+        "permutation_top": [
+          {
+            "variable": "Runtime",
+            "media": 0.06668,
+            "sd": 0.00456
+          },
+          {
+            "variable": "tasa_abandono_titulo",
+            "media": 0.01455,
+            "sd": 0.00172
+          },
+          {
+            "variable": "ag_seniors_Comedy",
+            "media": 0.00357,
+            "sd": 0.00082
+          },
+          {
+            "variable": "ag_youth_Action",
+            "media": 0.00313,
+            "sd": 0.00037
+          },
+          {
+            "variable": "g_Comedy",
+            "media": 0.00295,
+            "sd": 0.00082
+          },
+          {
+            "variable": "IMDB_Rating",
+            "media": 0.0007,
+            "sd": 0.00024
+          },
+          {
+            "variable": "g_Drama",
+            "media": 0.00068,
+            "sd": 6e-05
+          },
+          {
+            "variable": "g_Action",
+            "media": 0.00049,
+            "sd": 0.00059
+          }
+        ],
+        "posicion_variables_sembradas": {
+          "Runtime": 1,
+          "ag_youth_Action": 4,
+          "ag_seniors_Comedy": 3
+        }
+      }
+    }
+  },
+  "calibracion": {
+    "brier_sin_calibrar": {
+      "valor": 0.24253954234206632,
+      "ic95": [
+        0.2421294102027633,
+        0.24298233966527671
+      ]
+    },
+    "brier_calibrado": {
+      "valor": 0.09138860787546456,
+      "ic95": [
+        0.0881513602777984,
+        0.0949892926280381
+      ]
+    },
+    "brier_referencia": {
+      "valor": 0.09145617738816435,
+      "ic95": [
+        0.08823504799554363,
+        0.09509657929097273
+      ]
+    },
+    "metodo": "isotonica",
+    "prob_media_sin_calibrar_test": 0.49036764126798965,
+    "prob_media_calibrada_test": 0.10188770174466547,
+    "prob_calibrada_min_max_test": [
+      4.548713498890249e-16,
+      0.3424657534246575
+    ]
+  },
+  "costo_operativo": {
+    "tiempo_busqueda_s": 82.9,
+    "tiempo_ajuste_final_s": 1.5,
+    "latencia_individual_ms_mediana": 9.34,
+    "latencia_individual_ms_p95": 10.68,
+    "latencia_lote_ms_por_fila": 0.0037,
+    "tamano_modelo_mb": 2.3,
+    "n_arboles": 200,
+    "nucleos": 16
+  },
+  "tasa_abandono_por_decil_test": {
+    "1": 0.0926,
+    "2": 0.0936,
+    "3": 0.0991,
+    "4": 0.1045,
+    "5": 0.106,
+    "6": 0.0887,
+    "7": 0.102,
+    "8": 0.0951,
+    "9": 0.1005,
+    "10": 0.1361
+  },
+  "techo_de_senal": {
+    "advertencia": [
+      "La regla generadora NO se descubrió a ciegas: se conoció inspeccionando agent.py y contrastándola con los datos completos.",
+      "El test ya se evaluó una vez (sección 6); esta segunda evaluación no es una estimación limpia de generalización: las features se diseñaron conociendo el proceso generador. Es un análisis de techo de señal, no una selección de modelo; 'metricas' y 'umbral' de T05 no se sustituyen.",
+      "Mitigación: búsqueda con CV agrupada por usuario solo en train, AUC en validación reportado, codificaciones ajustadas fuera de pliegue dentro del Pipeline.",
+      "El techo de AUC (~0.52) limita a cualquier modelo que use solo estas variables."
+    ],
+    "regla": {
+      "youth": [
+        "Drama",
+        "Horror"
+      ],
+      "seniors": [
+        "Comedy",
+        "Romance"
+      ],
+      "adults": "nunca se penaliza",
+      "igualdad": "cadena completa de Genre (exacta)"
+    },
+    "segmento_regla": {
+      "p_segmento_train": 0.20543374642516682,
+      "p_resto_train": 0.09934755289297457,
+      "fraccion_train": 0.03485802581952913,
+      "fraccion_test": 0.032735736925515055,
+      "n_segmento_test": 661,
+      "tasa_por_celda_train": {
+        "seniors|Comedy": 0.2202797202797203,
+        "youth|Drama": 0.2055492638731597,
+        "youth|Horror": 0.10869565217391304
+      }
+    },
+    "oraculo_test": {
+      "Oráculo (binario)": {
+        "valor": 0.517787675135895,
+        "ic95": [
+          0.5128053331452408,
+          0.5235615360719359
+        ]
+      },
+      "Oráculo (prob. train)": {
+        "valor": 0.517787675135895,
+        "ic95": [
+          0.5128053331452408,
+          0.5235615360719359
+        ]
+      },
+      "Oráculo (por celda)": {
+        "valor": 0.5177940445428316,
+        "ic95": [
+          0.5128071913563143,
+          0.5235551740723442
+        ]
+      }
+    },
+    "oraculo_pr_auc_test": {
+      "Oráculo (binario)": {
+        "valor": 0.10825177205681595,
+        "ic95": [
+          0.10322078040228243,
+          0.11411597634790696
+        ]
+      },
+      "Oráculo (prob. train)": {
+        "valor": 0.10825177205681595,
+        "ic95": [
+          0.10322078040228243,
+          0.11411597634790696
+        ]
+      },
+      "Oráculo (por celda)": {
+        "valor": 0.10832280047658614,
+        "ic95": [
+          0.10328764662509132,
+          0.11414006088688754
+        ]
+      }
+    },
+    "oraculo_validacion_roc_auc": {
+      "Oráculo (binario)": 0.5202247172390094,
+      "Oráculo (prob. train)": 0.5202247172390094,
+      "Oráculo (por celda)": 0.5202085320122268
+    },
+    "oraculo_menos_rf_t05_roc_auc": {
+      "Oráculo (binario)": {
+        "diferencia": -0.0048886203934304095,
+        "ic95": [
+          -0.016916602611221625,
+          0.007446046800924787
+        ]
+      },
+      "Oráculo (prob. train)": {
+        "diferencia": -0.0048886203934304095,
+        "ic95": [
+          -0.016916602611221625,
+          0.007446046800924787
+        ]
+      },
+      "Oráculo (por celda)": {
+        "diferencia": -0.0048822509864937524,
+        "ic95": [
+          -0.01693465576149917,
+          0.007430908261305594
+        ]
+      }
+    },
+    "nota_oraculos": "binario y probabilístico (train) ordenan igual: mismo AUC; se reportan por transparencia.",
+    "rf_nuevo": {
+      "features_nuevas": [
+        "tasa_edad_genero_exacto (TE out-of-fold por usuario)",
+        "tasa_genero_exacto (TE out-of-fold por usuario)",
+        "n_generos",
+        "genero_unico",
+        "ng_youth",
+        "ng_adults",
+        "ng_seniors"
+      ],
+      "busqueda": {
+        "metodo": "RandomizedSearchCV",
+        "cv": "StratifiedGroupKFold(3, shuffle)",
+        "agrupado_por": "User_ID",
+        "scoring": "roc_auc",
+        "n_iter": 10,
+        "n_iter_t05": 20,
+        "espacio": {
+          "n_estimators": [
+            100,
+            200,
+            300
+          ],
+          "max_depth": [
+            4,
+            6,
+            8,
+            12
+          ],
+          "min_samples_leaf": [
+            10,
+            25,
+            50,
+            100
+          ],
+          "max_features": [
+            "sqrt",
+            0.3,
+            0.5
+          ],
+          "max_samples": [
+            0.3,
+            0.6,
+            null
+          ],
+          "class_weight": [
+            "balanced",
+            "balanced_subsample"
+          ]
+        },
+        "roc_auc_cv_mejor": 0.5220190796710482,
+        "roc_auc_cv_rango": [
+          0.5141991094322257,
+          0.5220190796710482
+        ]
+      },
+      "hiperparametros": {
+        "n_estimators": 100,
+        "min_samples_leaf": 100,
+        "max_samples": 0.6,
+        "max_features": 0.5,
+        "max_depth": 8,
+        "class_weight": "balanced"
+      },
+      "validacion": {
+        "roc_auc": 0.5172737935463794,
+        "pr_auc": 0.11632950249720417,
+        "roc_auc_rf_t05": 0.5208288498740425
+      },
+      "test": {
+        "roc_auc": {
+          "valor": 0.5233862631496742,
+          "ic95": [
+            0.5097036050022679,
+            0.5367995975751675
+          ]
+        },
+        "pr_auc": {
+          "valor": 0.11763389880567576,
+          "ic95": [
+            0.11046149581786015,
+            0.12661175865752217
+          ]
+        },
+        "roc_auc_rf_t05": {
+          "valor": 0.5226762955293254,
+          "ic95": [
+            0.5095091567837338,
+            0.5360815797269985
+          ]
+        }
+      },
+      "diferencia_vs_rf_t05": {
+        "roc_auc": {
+          "diferencia": 0.0007099676203488059,
+          "ic95": [
+            -0.010968320085474641,
+            0.012877359010767815
+          ]
+        },
+        "pr_auc": {
+          "diferencia": 0.0020540559869490493,
+          "ic95": [
+            -0.002299667787266257,
+            0.0065778390705726305
+          ]
+        },
+        "brier": {
+          "diferencia": -0.004964778063938663,
+          "ic95": [
+            -0.005421655615715549,
+            -0.004488006321780461
+          ]
+        }
+      },
+      "diferencia_vs_oraculo_prob": {
+        "roc_auc": {
+          "diferencia": 0.0055985880137792154,
+          "ic95": [
+            -0.0075269545630802384,
+            0.01747315218258049
+          ]
+        },
+        "pr_auc": {
+          "diferencia": 0.009382126748859812,
+          "ic95": [
+            0.005369429142222241,
+            0.014645243275381687
+          ]
+        },
+        "brier": {
+          "diferencia": 0.1464530398719838,
+          "ic95": [
+            0.14293961699507732,
+            0.14969487588289687
+          ]
+        }
+      },
+      "diferencia_vs_oraculo_por_celda": {
+        "roc_auc": {
+          "diferencia": 0.005592218606842558,
+          "ic95": [
+            -0.007571279858748555,
+            0.017446426871303235
+          ]
+        },
+        "pr_auc": {
+          "diferencia": 0.00931109832908962,
+          "ic95": [
+            0.0050731522492906325,
+            0.014543357155074823
+          ]
+        },
+        "brier": {
+          "diferencia": 0.14645574311606455,
+          "ic95": [
+            0.14294789083399537,
+            0.14969868598026506
+          ]
+        }
+      },
+      "alcanza_techo": true,
+      "criterio_techo": "el IC 95 % por usuario de ΔAUC (RF nuevo − oráculo prob.) contiene 0",
+      "importancias": {
+        "impurity_top": [
+          {
+            "variable": "tasa_edad_genero_exacto",
+            "impurity": 0.24559
+          },
+          {
+            "variable": "tasa_abandono_titulo",
+            "impurity": 0.12726
+          },
+          {
+            "variable": "tasa_genero_exacto",
+            "impurity": 0.09706
+          },
+          {
+            "variable": "No_of_Votes",
+            "impurity": 0.09368
+          },
+          {
+            "variable": "Runtime",
+            "impurity": 0.08787
+          },
+          {
+            "variable": "Released_Year",
+            "impurity": 0.06722
+          },
+          {
+            "variable": "Meta_score",
+            "impurity": 0.05302
+          },
+          {
+            "variable": "IMDB_Rating",
+            "impurity": 0.03452
+          },
+          {
+            "variable": "genero_unico",
+            "impurity": 0.01579
+          },
+          {
+            "variable": "n_generos",
+            "impurity": 0.01432
+          }
+        ],
+        "permutation_validacion_top": [
+          {
+            "variable": "tasa_edad_genero_exacto",
+            "media": 0.00978,
+            "sd": 0.00242
+          },
+          {
+            "variable": "Runtime",
+            "media": 0.00375,
+            "sd": 0.00395
+          },
+          {
+            "variable": "ag_seniors_Adventure",
+            "media": 0.00109,
+            "sd": 0.00022
+          },
+          {
+            "variable": "ng_adults",
+            "media": 0.00098,
+            "sd": 0.00027
+          },
+          {
+            "variable": "ag_seniors_Mystery",
+            "media": 0.00064,
+            "sd": 0.00044
+          },
+          {
+            "variable": "ag_seniors_Drama",
+            "media": 0.00054,
+            "sd": 4e-05
+          },
+          {
+            "variable": "ag_seniors_Family",
+            "media": 0.00053,
+            "sd": 0.00033
+          },
+          {
+            "variable": "g_Crime",
+            "media": 0.00046,
+            "sd": 0.00045
+          },
+          {
+            "variable": "ag_adults_Animation",
+            "media": 0.00038,
+            "sd": 0.00016
+          },
+          {
+            "variable": "Meta_score",
+            "media": 0.00035,
+            "sd": 0.00079
+          }
+        ],
+        "posicion_permutation": {
+          "tasa_edad_genero_exacto": 1,
+          "tasa_genero_exacto": 99,
+          "n_generos": 97
+        },
+        "posicion_impurity": {
+          "tasa_edad_genero_exacto": 1,
+          "tasa_genero_exacto": 3,
+          "n_generos": 10
+        }
+      }
+    },
+    "segmentos_riesgo": {
+      "base": "train (n, tasa, IC Wilson); confirmados en test",
+      "tasa_global_train": 0.1030455081662153,
+      "criterio_riesgo": "límite inferior del IC 95 % de Wilson > tasa global de train",
+      "k_segmentos": 7,
+      "n_min_train": 150,
+      "z_bonferroni": 2.690109527158867,
+      "esperados_por_azar_sin_senal": 0.17500000000000002,
+      "edad_x_genero_exacto": [
+        {
+          "edad": "seniors",
+          "genero": "Comedy",
+          "n_train": 286,
+          "tasa_train": 0.2202797202797203,
+          "ic95_train": [
+            0.1761308226284773,
+            0.2718435192189318
+          ],
+          "riesgo": true,
+          "riesgo_bonferroni": true,
+          "en_regla": true,
+          "n_test": 101,
+          "tasa_test": 0.19801980198019803,
+          "ic95_test": [
+            0.1320040139836005,
+            0.2861658727789059
+          ]
+        },
+        {
+          "edad": "youth",
+          "genero": "Drama",
+          "n_train": 1766,
+          "tasa_train": 0.2055492638731597,
+          "ic95_train": [
+            0.18735058498584956,
+            0.22502620624789704
+          ],
+          "riesgo": true,
+          "riesgo_bonferroni": true,
+          "en_regla": true,
+          "n_test": 544,
+          "tasa_test": 0.20404411764705882,
+          "ic95_test": [
+            0.1723086862793653,
+            0.23993017984544157
+          ]
+        },
+        {
+          "edad": "adults",
+          "genero": "Comedy",
+          "n_train": 285,
+          "tasa_train": 0.12280701754385964,
+          "ic95_train": [
+            0.08964099956646662,
+            0.1660063864056371
+          ],
+          "riesgo": false,
+          "riesgo_bonferroni": false,
+          "en_regla": false,
+          "n_test": 87,
+          "tasa_test": 0.04597701149425287,
+          "ic95_test": [
+            0.018022396823237183,
+            0.11233197826482823
+          ]
+        },
+        {
+          "edad": "youth",
+          "genero": "Horror",
+          "n_train": 46,
+          "tasa_train": 0.10869565217391304,
+          "ic95_train": [
+            0.04733076082742689,
+            0.23038103012631456
+          ],
+          "riesgo": false,
+          "riesgo_bonferroni": false,
+          "en_regla": true,
+          "n_test": 16,
+          "tasa_test": 0.125,
+          "ic95_test": [
+            0.034976749337057134,
+            0.3602333143674828
+          ]
+        },
+        {
+          "edad": "seniors",
+          "genero": "Drama",
+          "n_train": 1657,
+          "tasa_train": 0.09293904646952324,
+          "ic95_train": [
+            0.07988490663394324,
+            0.10787628624561854
+          ],
+          "riesgo": false,
+          "riesgo_bonferroni": false,
+          "en_regla": false,
+          "n_test": 591,
+          "tasa_test": 0.11336717428087986,
+          "ic95_test": [
+            0.09026373027922216,
+            0.14146451468548776
+          ]
+        },
+        {
+          "edad": "adults",
+          "genero": "Drama",
+          "n_train": 1661,
+          "tasa_train": 0.08248043347381095,
+          "ic95_train": [
+            0.07019422012483365,
+            0.09669348859171933
+          ],
+          "riesgo": false,
+          "riesgo_bonferroni": false,
+          "en_regla": false,
+          "n_test": 559,
+          "tasa_test": 0.09660107334525939,
+          "ic95_test": [
+            0.07479376162483801,
+            0.12391507581717053
+          ]
+        },
+        {
+          "edad": "youth",
+          "genero": "Comedy",
+          "n_train": 304,
+          "tasa_train": 0.07894736842105263,
+          "ic95_train": [
+            0.05362355801428046,
+            0.11477993261206765
+          ],
+          "riesgo": false,
+          "riesgo_bonferroni": false,
+          "en_regla": false,
+          "n_test": 94,
+          "tasa_test": 0.1276595744680851,
+          "ic95_test": [
+            0.07455740366811686,
+            0.21000049399504478
+          ]
+        }
+      ],
+      "por_n_generos": [
+        {
+          "n_generos": 1,
+          "n_train": 6399,
+          "tasa_train": 0.1304891389279575,
+          "ic95_train": [
+            0.12245709325133795,
+            0.13896458552328605
+          ],
+          "n_test": 2134,
+          "tasa_test": 0.1344892221180881,
+          "ic95_test": [
+            0.12066845750400779,
+            0.14962359781009965
+          ]
+        },
+        {
+          "n_generos": 2,
+          "n_train": 14961,
+          "tasa_train": 0.09925807098455985,
+          "ic95_train": [
+            0.09456909473567507,
+            0.10415279484316284
+          ],
+          "n_test": 5012,
+          "tasa_test": 0.10095770151636073,
+          "ic95_test": [
+            0.09292007015830402,
+            0.10960658060355415
+          ]
+        },
+        {
+          "n_generos": 3,
+          "n_train": 38827,
+          "tasa_train": 0.09998197130862545,
+          "ic95_train": [
+            0.09703759041498414,
+            0.10300550110533979
+          ],
+          "n_test": 13046,
+          "tasa_test": 0.09681128315192396,
+          "ic95_test": [
+            0.09185510837222627,
+            0.1020048385561717
+          ]
+        }
+      ],
+      "advertencia": "muchos segmentos (multiplicidad) y solapados; Horror juvenil tiene n pequeño"
+    },
+    "costo_segmento": {
+      "razon_equilibrio_fn_fp": 3.8677494199535967,
+      "p_segmento_train": 0.20543374642516682,
+      "por_razon": {
+        "3:1 (base)": {
+          "train": {
+            "actuar_sobre_segmento": 0.31535049096981077,
+            "no_actuar": 0.30913652449864587,
+            "actuar_sobre_todos": 0.8969544918337847
+          },
+          "test": {
+            "actuar_sobre_segmento": 0.31185618066561016,
+            "no_actuar": 0.3054675118858954,
+            "actuar_sobre_todos": 0.8981774960380349
+          },
+          "por_interaccion_del_segmento_train": {
+            "actuar": 0.7945662535748332,
+            "no_actuar": 0.6163012392755005
+          },
+          "compensa_actuar_segun_train": false
+        },
+        "5:1": {
+          "train": {
+            "actuar_sobre_segmento": 0.5071194776280592,
+            "no_actuar": 0.5152275408310765,
+            "actuar_sobre_todos": 0.8969544918337847
+          },
+          "test": {
+            "actuar_sobre_segmento": 0.5023276545166403,
+            "no_actuar": 0.5091125198098256,
+            "actuar_sobre_todos": 0.8981774960380349
+          },
+          "por_interaccion_del_segmento_train": {
+            "actuar": 0.7945662535748332,
+            "no_actuar": 1.027168732125834
+          },
+          "compensa_actuar_segun_train": true
+        }
+      }
+    }
+  },
+  "tiempos_seccion_s": {
+    "1_datos": 2.1,
+    "3_busqueda_rf": 82.9,
+    "4_baselines": 0.4,
+    "4_permutacion": 159.0,
+    "5_calibracion_umbral": 0.1,
+    "6_test": 1.9,
+    "7_importancias": 33.8,
+    "9_costo_operativo": 6.8,
+    "10_senal_sembrada": 39.2,
+    "11_techo_oraculo": 0.9,
+    "11_busqueda_rf_nuevo": 46.0,
+    "11_bootstrap_rf_nuevo": 2.0,
+    "11_importancias_rf_nuevo": 25.3,
+    "11_segmentos": 0.0
+  }
+}

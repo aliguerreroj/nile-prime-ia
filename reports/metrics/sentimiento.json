@@ -1,0 +1,553 @@
+{
+  "modo": "full",
+  "config": {
+    "semilla": 42,
+    "particion": {
+      "train": 34704,
+      "validacion": 4958,
+      "test": 9916,
+      "estratificada": true,
+      "reseñas_totales": 49578,
+      "sin_duplicados": true
+    },
+    "tfidf": {
+      "min_df": 3,
+      "sublinear_tf": true,
+      "dtype": "float32",
+      "lowercase": true
+    },
+    "busqueda_cv": {
+      "metodo": "GridSearchCV",
+      "folds": 3,
+      "scoring": "f1",
+      "espacio": {
+        "Regresión Logística": {
+          "clf__C": [
+            1,
+            4,
+            16,
+            64
+          ],
+          "tfidf__ngram_range": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        "LinearSVC": {
+          "clf__C": [
+            0.05,
+            0.2,
+            0.5,
+            1.0
+          ],
+          "tfidf__ngram_range": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        "Naive Bayes": {
+          "clf__alpha": [
+            0.03,
+            0.1,
+            0.3,
+            1.0
+          ],
+          "tfidf__ngram_range": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      }
+    },
+    "mejores_hiperparametros": {
+      "Regresión Logística": {
+        "clf__C": 16,
+        "tfidf__ngram_range": [
+          1,
+          2
+        ]
+      },
+      "LinearSVC": {
+        "clf__C": 0.5,
+        "tfidf__ngram_range": [
+          1,
+          2
+        ]
+      },
+      "Naive Bayes": {
+        "clf__alpha": 0.3,
+        "tfidf__ngram_range": [
+          1,
+          2
+        ]
+      }
+    },
+    "f1_cv_train": {
+      "Regresión Logística": 0.9092855757422739,
+      "LinearSVC": 0.9112016102722683,
+      "Naive Bayes": 0.8864787107269475
+    },
+    "n_bootstrap": 1000,
+    "modelo_final": {
+      "clasificador": "LinearSVC",
+      "calibracion": "sigmoid",
+      "regla_seleccion": "mayor F1 en validación entre los no significativamente peores (bootstrap pareado); menor latencia"
+    },
+    "versiones": {
+      "python": "3.13.9",
+      "scikit-learn": "1.7.2",
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "torch": "2.14.1+cpu",
+      "transformers": "5.19.0"
+    },
+    "hardware": {
+      "nucleos_logicos": 16,
+      "gpu": false
+    }
+  },
+  "baseline": {
+    "nombre": "DummyClassifier(strategy='stratified')",
+    "metricas": {
+      "accuracy": {
+        "valor": 0.5026220250100847,
+        "ic95": [
+          0.4926381605486083,
+          0.5127067365873336
+        ]
+      },
+      "f1": {
+        "valor": 0.5082751744765703,
+        "ic95": [
+          0.4961853349260498,
+          0.519261178625847
+        ]
+      }
+    },
+    "mejora_modelo_final": {
+      "diferencia_accuracy": {
+        "diferencia": 0.4070189592577652,
+        "ic95": [
+          0.3959257765227915,
+          0.4184146833400565
+        ]
+      },
+      "diferencia_f1": {
+        "diferencia": 0.4000342811108222,
+        "ic95": [
+          0.3876759884422812,
+          0.4134287305651991
+        ]
+      },
+      "n_test": 9916
+    }
+  },
+  "metricas": {
+    "accuracy": {
+      "valor": 0.9096409842678499,
+      "ic95": [
+        0.9041952400161355,
+        0.9151900968132312
+      ]
+    },
+    "f1": {
+      "valor": 0.9083094555873925,
+      "ic95": [
+        0.9026052908638456,
+        0.9140602068600692
+      ]
+    },
+    "brier": {
+      "valor": 0.06453067855272843,
+      "ic95": [
+        0.06108282350324206,
+        0.06767597844735332
+      ]
+    }
+  },
+  "umbral": {
+    "valor": 0.6,
+    "justificacion": "Umbral que minimiza el costo esperado en VALIDACIÓN con C_FP=2 (reseña negativa clasificada como positiva: queja enmascarada) y C_FN=1 (falsa alarma revisada por un analista); costo 0.1228 frente a 0.1341 con 0,5. Los costos son un supuesto de negocio; la sensibilidad a otras razones está en 'sensibilidad'.",
+    "costos": {
+      "C_FP": 2.0,
+      "C_FN": 1.0
+    },
+    "sensibilidad": {
+      "1:1": {
+        "umbral": 0.4599999999999999,
+        "costo": 0.08491327148043566,
+        "costo_en_0_5": 0.08713190802743041
+      },
+      "2:1 (base)": {
+        "umbral": 0.6,
+        "costo": 0.1228317870108915,
+        "costo_en_0_5": 0.13412666397741024
+      },
+      "5:1": {
+        "umbral": 0.83,
+        "costo": 0.1801129487696652,
+        "costo_en_0_5": 0.27511093182734975
+      },
+      "1:2": {
+        "umbral": 0.36999999999999994,
+        "costo": 0.11536910044372731,
+        "costo_en_0_5": 0.127269060104881
+      }
+    }
+  },
+  "modelos_test": {
+    "Baseline (Dummy estratificado)": {
+      "n": 9916,
+      "accuracy": {
+        "valor": 0.5026220250100847,
+        "ic95": [
+          0.4926381605486083,
+          0.5127067365873336
+        ]
+      },
+      "f1": {
+        "valor": 0.5082751744765703,
+        "ic95": [
+          0.4961853349260498,
+          0.519261178625847
+        ]
+      }
+    },
+    "Regresión Logística": {
+      "n": 9916,
+      "accuracy": {
+        "valor": 0.9115570794675272,
+        "ic95": [
+          0.906209661153691,
+          0.9170028237192416
+        ]
+      },
+      "f1": {
+        "valor": 0.9128143950690923,
+        "ic95": [
+          0.9072182675515071,
+          0.9182928990286613
+        ]
+      }
+    },
+    "LinearSVC": {
+      "n": 9916,
+      "accuracy": {
+        "valor": 0.9149858814037919,
+        "ic95": [
+          0.9098401573215006,
+          0.9206358410649456
+        ]
+      },
+      "f1": {
+        "valor": 0.9162444113263786,
+        "ic95": [
+          0.9109560419842183,
+          0.9219708609281455
+        ]
+      }
+    },
+    "Naive Bayes": {
+      "n": 9916,
+      "accuracy": {
+        "valor": 0.895219846712384,
+        "ic95": [
+          0.8894715611133521,
+          0.9010715006050827
+        ]
+      },
+      "f1": {
+        "valor": 0.8957141423266084,
+        "ic95": [
+          0.8897926059063603,
+          0.9017094641663401
+        ]
+      }
+    },
+    "LinearSVC + umbral 0.60 (modelo final)": {
+      "n": 9916,
+      "accuracy": {
+        "valor": 0.9096409842678499,
+        "ic95": [
+          0.9041952400161355,
+          0.9151900968132312
+        ]
+      },
+      "f1": {
+        "valor": 0.9083094555873925,
+        "ic95": [
+          0.9026052908638456,
+          0.9140602068600692
+        ]
+      }
+    }
+  },
+  "validacion": {
+    "baseline": {
+      "accuracy": {
+        "valor": 0.5082694634933441,
+        "ic95": [
+          0.4943525615167406,
+          0.5233965308592174
+        ]
+      },
+      "f1": {
+        "valor": 0.510441767068273,
+        "ic95": [
+          0.49404641775983854,
+          0.5271934137376025
+        ]
+      }
+    },
+    "Regresión Logística": {
+      "accuracy": {
+        "valor": 0.9124647035094796,
+        "ic95": [
+          0.9045935861234369,
+          0.9203307785397338
+        ]
+      },
+      "f1": {
+        "valor": 0.9134078212290503,
+        "ic95": [
+          0.9047495736192389,
+          0.9214420568479561
+        ]
+      }
+    },
+    "LinearSVC": {
+      "accuracy": {
+        "valor": 0.9156918112141993,
+        "ic95": [
+          0.9078257361839451,
+          0.9233561920129084
+        ]
+      },
+      "f1": {
+        "valor": 0.9167662285941856,
+        "ic95": [
+          0.9085429407904405,
+          0.9245251838665012
+        ]
+      }
+    },
+    "Naive Bayes": {
+      "accuracy": {
+        "valor": 0.8888664784187172,
+        "ic95": [
+          0.8805919725695845,
+          0.8981444130697862
+        ]
+      },
+      "f1": {
+        "valor": 0.8888440589065967,
+        "ic95": [
+          0.8794089913920837,
+          0.8982919777644736
+        ]
+      }
+    },
+    "brier_por_calibracion": {
+      "sigmoid": 0.06365826272782237,
+      "isotonic": 0.06379006465194918
+    }
+  },
+  "distilbert": {
+    "modelo": "distilbert-base-uncased-finetuned-sst-2-english",
+    "n_test": 1000,
+    "n_validacion": 500,
+    "accuracy": {
+      "valor": 0.896,
+      "ic95": [
+        0.877,
+        0.914025
+      ]
+    },
+    "f1": {
+      "valor": 0.8923395445134575,
+      "ic95": [
+        0.8716264713610526,
+        0.9125642776991755
+      ]
+    },
+    "accuracy_validacion": {
+      "valor": 0.888,
+      "ic95": [
+        0.86,
+        0.914
+      ]
+    },
+    "f1_validacion": {
+      "valor": 0.8852459016393442,
+      "ic95": [
+        0.8542037669677092,
+        0.9113478656895624
+      ]
+    },
+    "matriz_confusion_test": [
+      [
+        465,
+        33
+      ],
+      [
+        71,
+        431
+      ]
+    ],
+    "pct_truncadas_512_test": 11.200000000000001,
+    "pct_truncadas_512_validacion": 10.4,
+    "max_length": 512,
+    "modelo_final_misma_muestra": {
+      "accuracy": {
+        "valor": 0.911,
+        "ic95": [
+          0.892,
+          0.929
+        ]
+      },
+      "f1": {
+        "valor": 0.90927624872579,
+        "ic95": [
+          0.8888888888888888,
+          0.9282788926262164
+        ]
+      }
+    },
+    "comparacion_pareada": {
+      "diferencia_accuracy": {
+        "diferencia": -0.015000000000000013,
+        "ic95": [
+          -0.03600000000000003,
+          0.006000000000000005
+        ]
+      },
+      "diferencia_f1": {
+        "diferencia": -0.01693670421233251,
+        "ic95": [
+          -0.039343410277214705,
+          0.005503788498171357
+        ]
+      },
+      "mcnemar_exacto": {
+        "a_acierta_b_falla": 51,
+        "a_falla_b_acierta": 66,
+        "p_valor": 0.19534905940457858
+      }
+    },
+    "seleccion_validacion": {
+      "gana_significativamente": false,
+      "diferencia_accuracy": {
+        "diferencia": -0.02400000000000002,
+        "ic95": [
+          -0.05600000000000005,
+          0.006000000000000005
+        ]
+      },
+      "diferencia_f1": {
+        "diferencia": -0.025323204051712622,
+        "ic95": [
+          -0.059958054262299575,
+          0.005586164908469137
+        ]
+      }
+    }
+  },
+  "roberta_large": {
+    "modelo": "siebert/sentiment-roberta-large-english",
+    "ejecutado": false,
+    "motivo": "sin GPU (torch.cuda.is_available() es False); el modelo (~355 M de parámetros) es inviable en CPU dentro del presupuesto"
+  },
+  "costo_operativo": {
+    "Regresión Logística": {
+      "entrenamiento_s": 13.17973340000026,
+      "busqueda_cv_s": 45.782772899983684,
+      "latencia_lote1_ms": 0.6246855000790674,
+      "latencia_lote_ms": 0.27226143606741,
+      "tamano_mb": 10.217252
+    },
+    "LinearSVC": {
+      "entrenamiento_s": 12.601934600010281,
+      "busqueda_cv_s": 13.131482099997811,
+      "latencia_lote1_ms": 0.6496474999585189,
+      "latencia_lote_ms": 0.2517537918505711,
+      "tamano_mb": 10.217104
+    },
+    "Naive Bayes": {
+      "entrenamiento_s": 11.444125399983022,
+      "busqueda_cv_s": 11.490300699981162,
+      "latencia_lote1_ms": 2.9939035000279546,
+      "latencia_lote_ms": 0.26110306574905556,
+      "tamano_mb": 18.347745
+    },
+    "LinearSVC + umbral 0.60 (modelo final)": {
+      "entrenamiento_s": null,
+      "busqueda_cv_s": null,
+      "latencia_lote1_ms": 3.3548399999563117,
+      "latencia_lote_ms": 0.7133514723688767,
+      "tamano_mb": 21.926736
+    },
+    "DistilBERT-SST2": {
+      "entrenamiento_s": null,
+      "busqueda_cv_s": null,
+      "carga_s": 1.8,
+      "latencia_lote1_ms": 62.5308919994859,
+      "latencia_lote_ms": 62.011747399985325,
+      "latencia_lote1_n_resenas": 50,
+      "tamano_mb": 267.82004
+    }
+  },
+  "brier_referencia_prior": 0.24999633043785266,
+  "tiempos_seccion_s": {
+    "1_datos": 5.7,
+    "2_clasicos_cv": 107.7,
+    "3_validacion_clasicos": 16.2,
+    "4_distilbert_carga": 1.8,
+    "4_distilbert_validacion": 30.6,
+    "5_seleccion": 0.2,
+    "6_calibracion_umbral": 43.1,
+    "7_test_clasicos": 15.3,
+    "7_test_distilbert": 62.6,
+    "8_figuras": 0.6,
+    "9_costo_figura": 10.7
+  },
+  "linearsvc_vs_lr_test": {
+    "nota": "descriptivo; la selección se hizo en validación con una regla fijada de antemano",
+    "diferencia_accuracy": {
+      "diferencia": 0.0034288019362647137,
+      "ic95": [
+        0.0015127067365873215,
+        0.005647438483259326
+      ]
+    },
+    "diferencia_f1": {
+      "diferencia": 0.003430016257286228,
+      "ic95": [
+        0.0016258008652364237,
+        0.005531343791353607
+      ]
+    },
+    "mcnemar": {
+      "a_acierta_b_falla": 67,
+      "a_falla_b_acierta": 33,
+      "p_valor": 0.0008737198369123724
+    }
+  }
+}

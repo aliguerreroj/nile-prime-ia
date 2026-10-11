@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Modelos y cachés pesados (se regeneran al ejecutar los notebooks)
+models/
+*.joblib
+*.pkl
+.cache/
+mlruns/
+
+# Secretos y configuración local
+.env
+.env.*
+.claude/settings.local.json
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Paquete de entrega (zip pesado, se regenera con harness/empaquetar_entrega.py)
+entrega/
+
+# Salidas intermedias del informe (se regeneran con reports/informe/build_informe.py)
+reports/informe/figs/
+reports/informe/informe.html
+
+# Artefactos del editor de notebooks
+.virtual_documents/

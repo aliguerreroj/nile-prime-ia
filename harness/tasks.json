@@ -1,0 +1,458 @@
+{
+  "reglas": [
+    "Solo UNA tarea in_progress a la vez.",
+    "Una tarea pasa a done SOLO si validate.py pasa Y el revisor da PASS.",
+    "Las tareas de notebook exigen validate.py --full antes de done.",
+    "Los criterios salen de docs/CONTEXTO_CASO.md; si cambian allí, se actualizan aquí.",
+    "docs/ESTANDARES.md es obligatorio en todas las tareas con modelos (T03-T06)."
+  ],
+  "tareas": [
+    {
+      "id": "T00",
+      "titulo": "Arnés de ingeniería",
+      "fase": "entrega",
+      "estado": "done",
+      "depende_de": [],
+      "criterios_aceptacion": [
+        "docs/CONTEXTO_CASO.md conserva todo el contenido del CLAUDE.md original",
+        "CLAUDE.md tiene menos de 120 líneas y enlaza a docs/",
+        "Los 3 CSV están en data/raw/ y agent.py sigue en la raíz sin modificar",
+        "python harness/init.py termina con código 0 e imprime como máximo ~30 líneas",
+        "python harness/validate.py --quick termina con código 0 (sin notebooks: aviso, no fallo)",
+        "tasks.json contiene T00-T10 (entrega) y E01-E05 (escalado, backlog) con el esquema completo",
+        "Existen los 3 subagentes y los 4 comandos con su frontmatter",
+        "Existe la nota del proyecto en el vault de Obsidian siguiendo sus convenciones"
+      ],
+      "artifacts": [
+        "CLAUDE.md",
+        "README.md",
+        "requirements.txt",
+        "pyproject.toml",
+        ".gitignore",
+        "docs/CONTEXTO_CASO.md",
+        "docs/ARNES.md",
+        "harness/common.py",
+        "harness/init.py",
+        "harness/validate.py",
+        "harness/tasks.json",
+        "harness/data_manifest.json",
+        "progress/PROGRESS.md",
+        "progress/decisions.md",
+        "src/__init__.py",
+        "tests/test_harness.py",
+        ".claude/agents/lector.md",
+        ".claude/agents/implementador.md",
+        ".claude/agents/revisor.md",
+        ".claude/commands/inicio.md",
+        ".claude/commands/siguiente-tarea.md",
+        ".claude/commands/validar.md",
+        ".claude/commands/cerrar-sesion.md"
+      ],
+      "validacion": "python harness/validate.py --task T00 --quick"
+    },
+    {
+      "id": "T01",
+      "titulo": "Setup y src/data.py con tests",
+      "fase": "entrega",
+      "estado": "done",
+      "depende_de": [
+        "T00"
+      ],
+      "criterios_aceptacion": [
+        "init.py reporta el entorno OK (dependencias de requirements.txt instaladas)",
+        "src/data.py resuelve la raíz del proyecto sin rutas absolutas (local y Colab) y localiza los CSV con glob (los nombres llevan tildes en Unicode NFD) leyendo con encoding='utf-8'",
+        "Funciones con docstring para cargar reseñas, metadatos e interacciones; filas esperadas: 50.000, 1.000 y 100.624",
+        "Limpieza de metadatos: Runtime a entero (minutos), Gross a número, Released_Year numérico; nulos de Certificate, Meta_score y Gross tratados de forma explícita y documentada; el Series_Title duplicado se resuelve y se documenta",
+        "Limpieza de reseñas: se elimina el HTML (<br />) sin alterar la etiqueta sentiment",
+        "Modo rápido: con NP_FAST=1 las cargas devuelven una submuestra reproducible (SEED = 42); sin la variable, todos los datos",
+        "tests/test_data.py cubre tipos, número de filas, nulos, duplicados y el modo rápido; pytest y ruff pasan",
+        "No se modifica ningún archivo de data/raw/ ni agent.py"
+      ],
+      "artifacts": [
+        "src/data.py",
+        "tests/test_data.py"
+      ],
+      "validacion": "python harness/validate.py --task T01 --quick"
+    },
+    {
+      "id": "T02",
+      "titulo": "Notebook 00 — EDA y preparación",
+      "fase": "entrega",
+      "estado": "done",
+      "depende_de": [
+        "T01"
+      ],
+      "criterios_aceptacion": [
+        "Cumple las reglas de notebook de docs/ARNES.md (título y objetivo, celda de entorno según el contrato de Colab/local, SEED = 42, NP_FAST, español)",
+        "Cubre: tipos de datos, nulos, duplicados, distribuciones, abandono por grupo de edad y por género (multi-etiqueta) y popularidad de títulos",
+        "Documenta los hallazgos verificados: reseñas sin título de película (módulo independiente), tasa de abandono ~10,3 % (desbalance), señal débil por género y edad, y que NO existe la columna de tiempo visto que menciona el PDF",
+        "Usa las funciones de src/data.py (no duplica la limpieza en el notebook); src/plots.py define la paleta y el guardado de figuras a dpi=150",
+        "Cada sección explica QUÉ y POR QUÉ antes del código y cierra con una Conclusión técnica y una línea de Implicación de negocio (una frase); markdown para audiencia técnica según docs/ARNES.md",
+        "Gráficos con título, ejes con etiqueta y unidades en español y paleta consistente",
+        "reports/metrics/eda.json resume las cifras clave con \"modo\": \"full\"",
+        "validate.py --task T02 --full pasa"
+      ],
+      "artifacts": [
+        "src/plots.py",
+        "notebooks/py/00_EDA_y_preparacion.py",
+        "notebooks/00_EDA_y_preparacion.ipynb",
+        "reports/figures/00_nulos_metadatos.png",
+        "reports/figures/00_abandono_por_edad.png",
+        "reports/figures/00_abandono_por_genero.png",
+        "reports/figures/00_popularidad_titulos.png",
+        "reports/figures/00_estructura_preferencias.png",
+        "reports/metrics/eda.json"
+      ],
+      "validacion": "python harness/validate.py --task T02 --full"
+    },
+    {
+      "id": "T03",
+      "titulo": "Notebook 01 — Análisis de sentimiento",
+      "fase": "entrega",
+      "estado": "done",
+      "depende_de": [
+        "T01",
+        "T02"
+      ],
+      "criterios_aceptacion": [
+        "Cumple las reglas de notebook de docs/ARNES.md; las dependencias de NLP se añaden a requirements.txt con versión fijada y, en Colab, la celda de entorno instala solo las que falten (nunca torch, numpy, pandas ni scikit-learn)",
+        "Limpieza de texto documentada (HTML incluido)",
+        "Las reseñas se cargan con sin_duplicados=True: los duplicados (422 tras limpiar el HTML; quedan 49.578 reseñas) se eliminan ANTES del split para que ninguna reseña quede a la vez en train y en test; el notebook informa de cuántas filas quedan",
+        "Train/test estratificado sin fuga: el vectorizador TF-IDF se ajusta solo con train (Pipeline)",
+        "Líneas base sobre los datos completos: TF-IDF (1-2 gramas) + Regresión Logística, LinearSVC y Naive Bayes, más un baseline trivial de referencia",
+        "Transformer por defecto: distilbert-base-uncased-finetuned-sst-2-english (enlace accesible), evaluado sobre una muestra estratificada de ~1.000 reseñas del test con truncation=True y max_length=512; funciona en CPU",
+        "siebert/sentiment-roberta-large-english solo se ejecuta si torch.cuda.is_available(); sin GPU se omite y queda documentado en el notebook y en el JSON de métricas (sin celdas con error)",
+        "Métricas por modelo: accuracy, F1, matriz de confusión y tiempo de inferencia",
+        "Elige el modelo final justificando el trade-off entre rendimiento y costo operativo con las métricas y sus IC (audiencia técnica); cada sección cierra con Conclusión técnica e Implicación de negocio",
+        "Baseline TF-IDF + Regresión Logística con accuracy y F1 ≥ 0,89 en test (lo esperado en IMDB); si no se alcanza, se investiga la causa antes de seguir y se reporta tal cual",
+        "C y el rango de n-gramas se ajustan con CV sobre train (espacio de búsqueda documentado); el test se usa una sola vez",
+        "IC 95 % bootstrap (≥ 1.000 remuestreos) de accuracy y F1 para cada modelo; la elección del modelo final se apoya en esos IC",
+        "Costo operativo por modelo: tiempo de entrenamiento, latencia por reseña y tamaño del modelo",
+        "Umbral de decisión justificado (no 0,5 por defecto sin explicar) y calibración del modelo final (Brier score y curva de calibración)",
+        "Análisis cualitativo de 10 errores del mejor modelo",
+        "Cumple docs/ESTANDARES.md: JSON de métricas con config, baseline, metricas con IC 95 % y modo; test usado una sola vez; ficha del modelo al final del notebook",
+        "Figuras y reports/metrics/sentimiento.json (\"modo\": \"full\") generados; validate.py --task T03 --full pasa en menos de 15 minutos en CPU"
+      ],
+      "artifacts": [
+        "notebooks/py/01_sentimiento.py",
+        "notebooks/01_sentimiento.ipynb",
+        "reports/figures/01_comparacion_modelos.png",
+        "reports/figures/01_matriz_confusion.png",
+        "reports/figures/01_calibracion.png",
+        "reports/figures/01_umbral_costo.png",
+        "reports/metrics/sentimiento.json"
+      ],
+      "validacion": "python harness/validate.py --task T03 --full"
+    },
+    {
+      "id": "T04",
+      "titulo": "Notebook 02 — Recomendador híbrido",
+      "fase": "entrega",
+      "estado": "done",
+      "depende_de": [
+        "T01",
+        "T02"
+      ],
+      "criterios_aceptacion": [
+        "Cumple las reglas de notebook de docs/ARNES.md",
+        "Contenido: TF-IDF o embeddings de Overview + Genre + Director + Stars con similitud coseno",
+        "Colaborativo: matriz usuario x ítem implícita, comparando dos definiciones de interacción positiva: (a) cualquier película vista y (b) solo Watched_to_End=True; se elige una con los resultados de la evaluación",
+        "El grupo de edad se usa como señal: la popularidad por grupo de edad es un baseline adicional (y recurso de arranque en frío)",
+        "Híbrido ponderado; arranque en frío resuelto con popularidad y contenido",
+        "Evaluación leave-one-out sin fuga (el ítem retenido no participa en el entrenamiento) con Precision@K, Recall@K, NDCG@K y HitRate@K",
+        "Comparación contra los baselines aleatorio, popularidad global y popularidad por grupo de edad",
+        "src/recommender.py expone recommend(user_id, k) con docstrings y tests en tests/test_recommender.py",
+        "NDCG@10, HitRate@10, Precision@10 y Recall@10 con IC 95 % (bootstrap por usuario, ≥ 1.000 remuestreos)",
+        "El híbrido supera a popularidad con un test pareado por usuario (p < 0,05), o se reporta que no lo supera",
+        "El peso α del híbrido se ajusta en un conjunto de validación separado del test leave-one-out (nunca sobre test)",
+        "Cobertura de catálogo y diversidad intra-lista de cada recomendador",
+        "Costo operativo (tiempo de ajuste, latencia por recomendación, tamaño) y análisis cualitativo de recomendaciones fallidas",
+        "Cumple docs/ESTANDARES.md: JSON de métricas con config, baseline, metricas con IC 95 % y modo; test usado una sola vez; ficha del modelo al final del notebook",
+        "Cada sección cierra con Conclusión técnica e Implicación de negocio (audiencia técnica); figura y reports/metrics/recomendador.json (\"modo\": \"full\"); validate.py --task T04 --full pasa",
+        "Reporta honestamente que en los datos reales todos los métodos rinden ≈ azar en leave-one-out (HitRate@10 ≈ 1 %), respaldado con un test de permutación; no se presenta como mejora lo que no lo es",
+        "VALIDACIÓN CON SEÑAL SEMBRADA: generador sintético en src/ (usuarios con 2 géneros preferidos y probabilidad de elección configurable, semilla fija, con docstring y tests) donde el híbrido supera de forma estadísticamente significativa a popularidad y a azar, demostrando que el método recupera señal cuando existe",
+        "Comprobación cualitativa de vecinos por contenido (p. ej. The Godfather), cobertura del catálogo y arranque en frío"
+      ],
+      "artifacts": [
+        "src/recommender.py",
+        "tests/test_recommender.py",
+        "notebooks/py/02_recomendador.py",
+        "notebooks/02_recomendador.ipynb",
+        "reports/figures/02_comparacion_recomendadores.png",
+        "reports/figures/02_senal_sembrada.png",
+        "src/synthetic.py",
+        "tests/test_synthetic.py",
+        "reports/metrics/recomendador.json"
+      ],
+      "validacion": "python harness/validate.py --task T04 --full"
+    },
+    {
+      "id": "T05",
+      "titulo": "Notebook 03 — Abandono con Random Forest",
+      "fase": "entrega",
+      "estado": "done",
+      "depende_de": [
+        "T01",
+        "T02"
+      ],
+      "criterios_aceptacion": [
+        "Cumple las reglas de notebook de docs/ARNES.md",
+        "Random Forest es el modelo principal (obligatorio) y se compara contra un baseline",
+        "Une interacciones con metadatos; features: runtime, año, rating, votos, Meta_score, géneros multi-hot, grupo de edad e interacción grupo de edad x género",
+        "Sin fuga: partición por usuario (GroupKFold / GroupShuffleSplit)",
+        "Las features de historial (tasa de abandono por título) se ajustan SOLO con train dentro de cada fold (target encoding fit en train); la tasa de abandono propia del usuario no se usa como feature porque con la partición por usuario no existe en entrenamiento; se documenta",
+        "Prueba de permutación: AUC del modelo vs. distribución del AUC con etiquetas barajadas (≥ 30 permutaciones) con p-valor, y un DummyClassifier, para demostrar estadísticamente si hay señal o no",
+        "Desbalance tratado con class_weight; RandomizedSearchCV del Random Forest con StratifiedGroupKFold por usuario y espacio de búsqueda documentado (reducido en modo FAST)",
+        "Métricas con IC 95 %: ROC-AUC, PR-AUC, F1 y recall de la clase 'abandona'",
+        "Calibración: Brier score y curva de calibración",
+        "Umbral elegido en validación con una matriz de costos documentada (supuesto de negocio explícito: costo de FP y de FN) y comparado con el umbral que maximiza F2; nunca 0,5 por defecto",
+        "Importancia de variables por impurity y por permutation",
+        "Se espera AUC ≈ 0,5 (el abandono se comporta como ruido, ver docs/CONTEXTO_CASO.md §8): se dice con honestidad y la conclusión de negocio es qué datos recoger (tiempo visto, marcas de tiempo, dispositivo, momento del abandono, etc.)",
+        "Costo operativo (entrenamiento, latencia por predicción, tamaño) y análisis cualitativo de errores",
+        "Cumple docs/ESTANDARES.md: JSON de métricas con config, baseline, metricas con IC 95 % y modo; test usado una sola vez; ficha del modelo al final del notebook",
+        "src/features.py con docstrings y tests; figuras y reports/metrics/abandono.json (\"modo\": \"full\"); validate.py --task T05 --full pasa",
+        "VALIDACIÓN CON SEÑAL SEMBRADA: datos sintéticos con abandono dependiente de la duración y de edad × género (generador en src/ con semilla fija, docstring y tests) donde el Random Forest sí detecta la señal (AUC claramente > 0,5 con IC e importancias coherentes con la señal sembrada), frente a los datos reales (AUC ≈ 0,5)",
+        "Costos confirmados por Ali: C_FN = 3 (no detectar a un usuario que abandonará: pérdida de engagement y riesgo de baja) y C_FP = 1 (acción de retención innecesaria pero barata). El umbral se elige en validación minimizando el costo esperado, se compara con el de F2 y se reporta su sensibilidad a la razón de costos (1:1, 2:1, 3:1, 5:1); si el modelo no tiene señal, se documenta y explica que el umbral óptimo degenera (marcar a todos o a nadie)"
+      ],
+      "artifacts": [
+        "src/features.py",
+        "tests/test_features.py",
+        "notebooks/py/03_abandono_random_forest.py",
+        "notebooks/03_abandono_random_forest.ipynb",
+        "reports/figures/03_curvas_roc_pr.png",
+        "reports/figures/03_umbral.png",
+        "reports/figures/03_importancia_variables.png",
+        "reports/figures/03_calibracion.png",
+        "reports/figures/03_prueba_permutacion.png",
+        "reports/figures/03_senal_sembrada.png",
+        "reports/metrics/abandono.json"
+      ],
+      "validacion": "python harness/validate.py --task T05 --full"
+    },
+    {
+      "id": "T06",
+      "titulo": "src/rl_env.py y Notebook 04 — Aprendizaje por refuerzo",
+      "fase": "entrega",
+      "estado": "done",
+      "depende_de": [
+        "T04"
+      ],
+      "criterios_aceptacion": [
+        "Cumple las reglas de notebook de docs/ARNES.md; agent.py NO se modifica",
+        "src/rl_env.py define NilePrimeEnv heredando de SimulationEnvironment con modo=\"original\" por defecto: comparación EXACTA de género (fiel al profesor y a los datos, que se generaron con esa misma regla); solo corrige los bugs reales (_get_state() inexistente y reset() sin devolver estado); mantiene la lógica de recompensa del profesor y documenta cada cambio. modo=\"contiene\" (pertenencia) como análisis de sensibilidad. Opcional si el tiempo lo permite: modo=\"calibrado\" con probabilidades estimadas de los datos (base ~10 %, segmento ~21 %)",
+        "Importa agent.py sin fallar aunque los CSV estén en data/raw/ (agent.py los lee del directorio actual al importarse)",
+        "El notebook demuestra los 2 bugs reales del entorno original (_get_state() inexistente y reset() sin devolver estado) dentro de try/except (sin celdas con error), explica que la comparación exacta de género NO es un bug sino el proceso que generó los datos (verificado: youth × Drama/Horror exactos 20,6 %, seniors × Comedy exacto 21,1 %, resto ~10 %), documenta las inconsistencias simulador vs. datos (0 % de abandono en géneros no penalizados frente a ~10 %; penalizaciones 0,30/0,25 frente a ~0,21) y compara modo original vs. contiene",
+        "Plantea el problema como bandit contextual (episodios de 1 paso)",
+        "Q-learning tabular (estado = grupo de edad; acción = película o re-ranking del top-K del recomendador híbrido); DQN pequeño opcional",
+        "Política ÓPTIMA analítica en cada modo, calculada a partir de las probabilidades conocidas del simulador (qué películas evitar por grupo de edad), y regret acumulado frente a ella",
+        "Compara Q-learning vs. política aleatoria vs. recomendador sin RL vs. óptimo",
+        "≥ 5 semillas, con media ± desviación estándar en curvas y métricas finales",
+        "Decaimiento de ε y tasa de aprendizaje justificados; criterio de convergencia explícito",
+        "Curvas de recompensa media y política aprendida por grupo de edad; cada sección cierra con Conclusión técnica e Implicación de negocio (audiencia técnica)",
+        "Cumple docs/ESTANDARES.md: JSON de métricas con config, baseline, metricas con IC 95 % y modo; test usado una sola vez; ficha del modelo al final del notebook",
+        "tests/test_rl_env.py; figuras y reports/metrics/rl.json (\"modo\": \"full\"); validate.py --task T06 --full pasa",
+        "La narrativa de cierre explica que el agente aprende en línea el mismo segmento que el Random Forest detectó offline (youth × drama/terror puro; seniors × comedia/romance puro), cuantifica cuánto tarda en descubrirlo (interacciones hasta evitar el segmento de riesgo) y la mejora frente al recomendador estático; dado que el histórico no muestra preferencias de elección (notebook 00, Estructura de preferencias), el aprendizaje en línea es la vía para descubrirlas"
+      ],
+      "artifacts": [
+        "src/rl_env.py",
+        "tests/test_rl_env.py",
+        "notebooks/py/04_aprendizaje_por_refuerzo.py",
+        "notebooks/04_aprendizaje_por_refuerzo.ipynb",
+        "reports/figures/04_entorno_original_vs_corregido.png",
+        "reports/figures/04_curvas_recompensa.png",
+        "reports/figures/04_politica_por_edad.png",
+        "reports/figures/04_regret_acumulado.png",
+        "reports/metrics/rl.json"
+      ],
+      "validacion": "python harness/validate.py --task T06 --full"
+    },
+    {
+      "id": "T05b",
+      "titulo": "Ingeniería de características y techo de señal (abandono)",
+      "fase": "entrega",
+      "estado": "done",
+      "depende_de": [
+        "T05"
+      ],
+      "criterios_aceptacion": [
+        "Se ejecuta DESPUÉS de T06; presupuesto 45 min. Amplía el notebook 03 con una sección nueva, sin romper lo ya validado en T05",
+        "Calcula el AUC oráculo de la regla generadora (youth × Genre exactamente Drama/Horror; seniors × exactamente Comedy/Romance) con IC 95 % por usuario sobre el mismo test, y lo compara con el Random Forest de T05",
+        "src/features.py añade las features genero_exacto (cadena de género completa), n_generos y su interacción con el grupo de edad, con docstrings y tests; sin fuga (ajuste solo con train dentro del Pipeline)",
+        "Reentrena el Random Forest con las nuevas features (misma partición por usuario, búsqueda con CV en train) y muestra, con IC y comparación pareada, que alcanza el techo de señal, con importancias interpretables (impurity y permutation)",
+        "Tabla de segmentos de riesgo (edad × género exacto, y por número de géneros) con tasa de abandono, n e IC de Wilson, y su implicación de negocio",
+        "Se declara que la regla se conoció por inspección de agent.py y de los datos (no se presenta como descubrimiento a ciegas), que el test ya se había evaluado en T05 y que el techo de AUC ≈ 0,52 limita cualquier modelo con estas variables",
+        "Cada sección cierra con Conclusión técnica e Implicación de negocio (audiencia técnica); abandono.json actualizado (\"modo\": \"full\") y ficha del modelo revisada; validate.py --task T05b --full pasa"
+      ],
+      "artifacts": [
+        "src/features.py",
+        "tests/test_features.py",
+        "notebooks/py/03_abandono_random_forest.py",
+        "notebooks/03_abandono_random_forest.ipynb",
+        "reports/figures/03_segmentos_riesgo.png",
+        "reports/figures/03_importancia_genero_exacto.png",
+        "reports/metrics/abandono.json"
+      ],
+      "validacion": "python harness/validate.py --task T05b --full"
+    },
+    {
+      "id": "T07",
+      "titulo": "Validación full, paquete de entrega (Classroom) y prueba en Colab",
+      "fase": "entrega",
+      "estado": "done",
+      "depende_de": [
+        "T02",
+        "T03",
+        "T04",
+        "T05",
+        "T05b",
+        "T06"
+      ],
+      "criterios_aceptacion": [
+        "python harness/validate.py --full (todas las tareas) pasa con los 5 notebooks",
+        "Cada notebook se ejecuta de forma independiente con 'Restart & Run All' (no depende de otro notebook)",
+        "Decisión de Ali: la entrega es por Classroom (informe PDF + código que se ejecute sin errores), NO por GitHub; no se crea remoto",
+        "harness/empaquetar_entrega.py genera entrega/NilePrime_AliGuerrero_codigo.zip con: notebooks/*.ipynb EJECUTADOS (con salidas, modo full), notebooks/py/, src/, tests/, data/raw/, agent.py, requirements.txt, README.md e informe_nile_prime.pdf (si el PDF aún no existe, el script avisa y el paquete definitivo se regenera en T10). Excluye .git, .venv, .cache, progress/, .claude/ y reports/informe/figs",
+        "El PDF se copia también a entrega/informe_nile_prime.pdf (archivo suelto para Classroom) cuando existe",
+        "VERIFICACIÓN OBLIGATORIA: el zip se descomprime en una carpeta temporal fuera del repo y allí se ejecutan los 5 notebooks de principio a fin con nbclient (Python de .venv), sin errores; se registran los tiempos por notebook",
+        "Celda de entorno en Colab (los 5 notebooks): si no encuentra data/raw, busca un zip del proyecto en /content y lo descomprime; si no lo hay, muestra instrucciones claras (\"sube NilePrime_AliGuerrero_codigo.zip a Colab y vuelve a ejecutar\"); sin dependencia de GitHub; instala solo las dependencias que falten, con versión fijada, sin reinstalar las que Colab ya trae; los modelos externos usan enlaces accesibles",
+        "README.md incluye una sección \"Cómo ejecutar\" (local y Colab) en 3 pasos",
+        "docs/PRUEBA_COLAB.md queda como plantilla (fecha, entorno, tiempos y resultado por notebook, versiones); la prueba real en Colab la hace Ali a mano después y entonces se registran las versiones en docs/ARNES.md"
+      ],
+      "artifacts": [
+        "harness/empaquetar_entrega.py",
+        "docs/PRUEBA_COLAB.md",
+        "README.md"
+      ],
+      "validacion": "python harness/validate.py --full"
+    },
+    {
+      "id": "T08",
+      "titulo": "Pulido de pendientes menores y consolidación de métricas",
+      "fase": "entrega",
+      "estado": "done",
+      "depende_de": [
+        "T07"
+      ],
+      "criterios_aceptacion": [
+        "reports/metrics/resumen.json consolida las métricas finales de los 4 retos a partir de los JSON de cada notebook (\"modo\": \"full\"), sin cifras copiadas a mano; lo genera `python reports/informe/build_informe.py` (script del asesor de Ali: se integra, no se reescribe; usa Edge/Chrome headless y la variable NP_CHROME para indicar la ruta si no lo encuentra)",
+        "jinja2 está fijado en requirements.txt",
+        "reports/figures/INDICE.md lista cada figura con su notebook de origen y el mensaje de negocio que transmite",
+        "Las figuras comparten paleta, idioma (español) y dpi=150",
+        "Las cifras del resumen coinciden con las salidas de los notebooks ejecutados en --full",
+        "Pulido de pendientes menores (T04): el generador de señal sembrada se evalúa con ≥ 5 semillas por dosis (media ± desviación e IC); colores distinguibles entre recomendadores en 02_senal_sembrada.png; recomendador.json guarda la curva de validación por α de cada dosis",
+        "Pulido de pendientes menores (T03): la latencia por reseña suelta (lote 1) figura en la tabla de elección del modelo y DistilBERT se mide también con lote 1",
+        "Artefacto de \"Drishyam\": sale primero en el arranque en frío para todos los grupos porque su popularidad está inflada por la colisión de títulos (dos películas con el mismo nombre); se corrige (p. ej. repartiendo o descontando sus interacciones en la popularidad) o se documenta de forma explícita en el notebook 02 y en su ficha",
+        "Los JSON afectados se regeneran en --full y no se modifica el formato de abandono.json (bloque techo_de_senal), que el script del informe ya lee"
+      ],
+      "artifacts": [
+        "reports/metrics/resumen.json",
+        "reports/figures/INDICE.md"
+      ],
+      "validacion": "python harness/validate.py --task T08 --full"
+    },
+    {
+      "id": "T09",
+      "titulo": "Informe PDF para público no técnico",
+      "fase": "entrega",
+      "estado": "done",
+      "depende_de": [
+        "T08"
+      ],
+      "criterios_aceptacion": [
+        "El informe se genera con `python reports/informe/build_informe.py` a partir de reports/informe/plantilla.html.j2 (ambos del asesor de Ali: se integran, no se reescriben ni se rediseñan)",
+        "El informe cubre los 4 retos con gráficos, tablas y conclusiones basadas en el análisis",
+        "Lenguaje no técnico: cada reto explica el problema de negocio, qué se hizo, el resultado y la recomendación",
+        "Todas las cifras salen de reports/metrics/resumen.json (consolidado desde los JSON de los notebooks)",
+        "Recoge los hallazgos sobre agent.py y las limitaciones de los datos (señal débil de abandono, falta del tiempo visto)",
+        "Se revisa el PDF página por página y se corrigen SOLO los textos o cifras incoherentes con los notebooks",
+        "La fuente del informe está versionada y el PDF se regenera con un comando documentado"
+      ],
+      "artifacts": [
+        "reports/informe/build_informe.py",
+        "reports/informe/plantilla.html.j2",
+        "reports/informe_nile_prime.pdf"
+      ],
+      "validacion": "python harness/validate.py --task T09 --full"
+    },
+    {
+      "id": "T10",
+      "titulo": "README final y cierre",
+      "fase": "entrega",
+      "estado": "done",
+      "depende_de": [
+        "T09"
+      ],
+      "criterios_aceptacion": [
+        "README.md explica el caso, la estructura, cómo instalar y ejecutar (local y Colab), los resultados principales y enlaza al informe",
+        "python harness/validate.py --full pasa en un árbol de git limpio",
+        "progress/PROGRESS.md, decisions.md y la nota de Obsidian reflejan el cierre de la fase de entrega",
+        "La lista de entregables (notebooks + informe PDF) está verificada contra el enunciado del caso",
+        "Paquete definitivo: se vuelve a ejecutar harness/empaquetar_entrega.py con el PDF final y los notebooks de T08, se repite la verificación del zip en una carpeta temporal y quedan entrega/NilePrime_AliGuerrero_codigo.zip y entrega/informe_nile_prime.pdf listos para Classroom"
+      ],
+      "artifacts": [
+        "README.md"
+      ],
+      "validacion": "python harness/validate.py --full"
+    },
+    {
+      "id": "E01",
+      "titulo": "API FastAPI + Docker",
+      "fase": "escalado",
+      "estado": "backlog",
+      "depende_de": [
+        "T10"
+      ],
+      "criterios_aceptacion": [],
+      "artifacts": [],
+      "validacion": ""
+    },
+    {
+      "id": "E02",
+      "titulo": "MLflow tracking",
+      "fase": "escalado",
+      "estado": "backlog",
+      "depende_de": [
+        "T10"
+      ],
+      "criterios_aceptacion": [],
+      "artifacts": [],
+      "validacion": ""
+    },
+    {
+      "id": "E03",
+      "titulo": "CI con GitHub Actions",
+      "fase": "escalado",
+      "estado": "backlog",
+      "depende_de": [
+        "T10"
+      ],
+      "criterios_aceptacion": [],
+      "artifacts": [],
+      "validacion": ""
+    },
+    {
+      "id": "E04",
+      "titulo": "Recomendador semántico con embeddings + asistente RAG",
+      "fase": "escalado",
+      "estado": "backlog",
+      "depende_de": [
+        "T10"
+      ],
+      "criterios_aceptacion": [],
+      "artifacts": [],
+      "validacion": ""
+    },
+    {
+      "id": "E05",
+      "titulo": "Demo web",
+      "fase": "escalado",
+      "estado": "backlog",
+      "depende_de": [
+        "T10"
+      ],
+      "criterios_aceptacion": [],
+      "artifacts": [],
+      "validacion": ""
+    }
+  ]
+}

@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Nile Prime · Informe de resultados</title>
+{% set s = r.sentimiento %}{% set rc = r.recomendador %}{% set a = r.abandono %}{% set rf = r.refuerzo %}{% set d = r.datos %}
+<style>
+  :root {
+    --tinta: #1B2430; --suave: #5B6573; --linea: #E3E7EC; --fondo: #F6F7F9;
+    --nilo: #0F766E; --nilo-claro: #E3F1EF; --arena: #C08A3E; --arena-clara: #F7EEDF; --alerta: #B4533A;
+  }
+  @page { size: A4; margin: 18mm 17mm 18mm 17mm;
+    @bottom-right { content: counter(page); font: 9pt "Segoe UI", Inter, Arial, sans-serif; color: #8A94A3; }
+    @bottom-left { content: "Nile Prime · Informe de resultados"; font: 9pt "Segoe UI", Inter, Arial, sans-serif; color: #8A94A3; } }
+  @page portada { margin: 0; @bottom-right { content: none; } @bottom-left { content: none; } }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; font-family: "Segoe UI", Inter, Arial, sans-serif; color: var(--tinta);
+         font-size: 10.6pt; line-height: 1.5; }
+  h1, h2, h3 { line-height: 1.2; margin: 0; }
+  h2 { font-size: 19pt; margin: 0 0 3mm; letter-spacing: -0.01em; }
+  h3 { font-size: 12pt; margin: 5mm 0 2mm; }
+  p { margin: 0 0 3mm; }
+  .kicker { text-transform: uppercase; letter-spacing: .12em; font-size: 8.5pt; color: var(--nilo);
+            font-weight: 700; margin-bottom: 2mm; }
+  .lead { font-size: 11.5pt; color: var(--suave); margin-bottom: 4mm; }
+  section { break-before: page; }
+  .avoid { break-inside: avoid; }
+  strong { font-weight: 650; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* Portada */
+  .portada { page: portada; break-before: auto; height: 297mm; position: relative; background: var(--tinta);
+             color: #fff; padding: 30mm 22mm; overflow: hidden; }
+  .portada .rio { position: absolute; left: -10mm; right: -10mm; bottom: 46mm; height: 70mm; opacity: .9; }
+  .portada .marca { font-size: 10pt; letter-spacing: .3em; text-transform: uppercase; color: #9FD8CF; }
+  .portada h1 { font-size: 34pt; margin: 18mm 0 6mm; max-width: 150mm; letter-spacing: -0.02em; }
+  .portada .sub { font-size: 13pt; color: #C9D3DD; max-width: 140mm; }
+  .portada .pie { position: absolute; left: 22mm; right: 22mm; bottom: 20mm; font-size: 10pt; color: #C9D3DD;
+                  display: flex; justify-content: space-between; border-top: 1px solid #3A4656; padding-top: 5mm; }
+  .portada .pie b { color: #fff; font-weight: 600; }
+
+  /* Tarjetas */
+  .kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4mm; margin: 4mm 0 6mm; }
+  .kpi { border: 1px solid var(--linea); border-radius: 3mm; padding: 4mm 5mm; background: #fff; }
+  .kpi .reto { font-size: 8.5pt; text-transform: uppercase; letter-spacing: .1em; color: var(--suave); }
+  .kpi .cifra { font-size: 22pt; font-weight: 700; color: var(--nilo); margin: 1mm 0; }
+  .kpi .que { font-size: 9.8pt; color: var(--tinta); }
+  .kpi.arena .cifra { color: var(--arena); }
+  .kpi.alerta .cifra { color: var(--alerta); }
+
+  .caja { background: var(--fondo); border-radius: 3mm; padding: 4mm 5mm; margin: 3mm 0 4mm; }
+  .caja.nilo { background: var(--nilo-claro); }
+  .caja.arena { background: var(--arena-clara); }
+  .caja h4 { margin: 0 0 1.5mm; font-size: 10.5pt; }
+  .caja p:last-child, .caja ul:last-child { margin-bottom: 0; }
+  ul { margin: 0 0 3mm; padding-left: 5mm; }
+  li { margin-bottom: 1.2mm; }
+
+  .tres { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin: 3mm 0 5mm; }
+  .paso { border-top: 3px solid var(--nilo); padding-top: 2mm; }
+  .paso b { display: block; font-size: 10pt; margin-bottom: 1mm; }
+  .paso span { font-size: 9.6pt; color: var(--suave); }
+
+  figure { margin: 3mm 0 4mm; }
+  figure img { width: 100%; display: block; }
+  figcaption { font-size: 9pt; color: var(--suave); margin-top: 1.5mm; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 9.8pt; margin: 2mm 0 4mm; }
+  th { text-align: left; font-weight: 600; color: var(--suave); border-bottom: 1.5px solid var(--tinta); padding: 1.6mm 2mm; }
+  td { border-bottom: 1px solid var(--linea); padding: 1.6mm 2mm; vertical-align: top; }
+  td.r, th.r { text-align: right; }
+
+  .hoja { display: grid; grid-template-columns: 9mm 1fr; gap: 1mm 3mm; margin-bottom: 3mm; }
+  .hoja .n { width: 7mm; height: 7mm; border-radius: 50%; background: var(--nilo); color: #fff; font-weight: 700;
+             font-size: 9.5pt; display: flex; align-items: center; justify-content: center; }
+  .hoja .t b { display: block; }
+  .nota { font-size: 9pt; color: var(--suave); }
+  .glosario dt { font-weight: 650; }
+  .glosario dd { margin: 0 0 2.5mm 0; color: var(--suave); }
+</style>
+</head>
+<body>
+
+<!-- ================================================================ PORTADA -->
+<div class="portada">
+  <div class="marca">Nile Prime · Consultoría de IA</div>
+  <h1>Conocer, recomendar y retener a la audiencia con inteligencia artificial</h1>
+  <p class="sub">Informe de resultados de los cuatro retos: opiniones de los usuarios, recomendaciones
+     personalizadas, riesgo de abandono y un recomendador que aprende de cada interacción.</p>
+  <svg class="rio" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 150 C 140 60, 260 190, 400 110 S 640 40, 800 90" fill="none" stroke="#0F766E" stroke-width="34" stroke-linecap="round" opacity=".55"/>
+    <path d="M0 150 C 140 60, 260 190, 400 110 S 640 40, 800 90" fill="none" stroke="#5FB7AA" stroke-width="6" stroke-linecap="round"/>
+    <path d="M0 182 C 160 120, 300 200, 440 150 S 660 100, 800 130" fill="none" stroke="#C08A3E" stroke-width="2" stroke-dasharray="4 7" opacity=".8"/>
+  </svg>
+  <div class="pie">
+    <div><b>Ali Alejandro Guerrero Jaimes</b><br>Máster en Data Science &amp; Business Analytics · IMMUNE Technology Institute</div>
+    <div style="text-align:right">Caso práctico · Inteligencia Artificial para la Empresa<br><b>{{ fecha }}</b></div>
+  </div>
+</div>
+
+<!-- ================================================================ RESUMEN EJECUTIVO -->
+<section>
+  <div class="kicker">Resumen ejecutivo</div>
+  <h2>Lo esencial en una página</h2>
+  <p class="lead">Nile Prime quiere entender mejor a su audiencia para competir con las grandes plataformas.
+     Analizamos sus datos y construimos cuatro soluciones de IA. Estos son los resultados.</p>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="reto">Reto 1 · Opiniones</div>
+      <div class="cifra num">{{ (s.accuracy * 100) | fmt(0) }} de 100</div>
+      <div class="que">reseñas clasificadas correctamente como positivas o negativas, de forma automática y en milisegundos.</div>
+    </div>
+    <div class="kpi arena">
+      <div class="reto">Reto 2 · Recomendaciones</div>
+      <div class="cifra num">×{{ rc.multiplo_sembrada | fmt(1) }}</div>
+      <div class="que">más aciertos que «recomendar lo más popular» cuando los usuarios tienen gustos definidos. En el histórico actual no hay gustos que aprender.</div>
+    </div>
+    <div class="kpi alerta">
+      <div class="reto">Reto 3 · Abandono</div>
+      <div class="cifra num">×{{ a.multiplo_segmento | fmt(1) }}</div>
+      <div class="que">más abandono en dos segmentos concretos: {% for x in a.segmentos_riesgo %}{{ x.corta }} ({{ x.tasa | pct(1) }}){% if not loop.last %} y {% endif %}{% endfor %}, frente al {{ a.tasa_global_train | pct(1) }} de media.</div>
+    </div>
+    <div class="kpi">
+      <div class="reto">Reto 4 · Aprendizaje continuo</div>
+      <div class="cifra num">{{ (1000 * (1 - rf.original.hibrido)) | fmt(0) }} → {{ (1000 * (1 - rf.original.rl)) | fmt(2) }}</div>
+      <div class="que">abandonos por cada 1.000 recomendaciones en el simulador: el agente que aprende elimina casi todos los que provoca un recomendador estático.</div>
+    </div>
+  </div>
+
+  <h3>Tres mensajes para la dirección</h3>
+  <div class="hoja"><div class="n">1</div><div class="t"><b>Las opiniones ya se pueden leer a escala.</b>
+    El clasificador de reseñas está listo para usarse: acierta {{ s.accuracy | pct(1) }} de las veces, es rápido y barato
+    de operar, y está ajustado para no dejar pasar quejas.</div></div>
+  <div class="hoja"><div class="n">2</div><div class="t"><b>El histórico de visualizaciones no revela gustos, y eso es un hallazgo.</b>
+    Lo comprobamos con pruebas estadísticas: qué ve cada usuario se comporta como el azar. Ningún recomendador
+    puede aprender de ahí, pero demostramos que el nuestro sí aprende cuando los gustos existen.</div></div>
+  <div class="hoja"><div class="n">3</div><div class="t"><b>Aprender en tiempo real es el camino.</b>
+    El abandono depende de una combinación concreta de edad y tipo de película. Un agente que aprende de cada
+    respuesta aprende a evitarla en pocas interacciones y deja de recomendar lo que la gente abandona.</div></div>
+
+  <div class="caja nilo avoid">
+    <h4>Recomendación principal</h4>
+    <p>Poner en marcha el clasificador de reseñas, probar con un experimento controlado la regla de negocio que hemos identificado sobre el
+    abandono (una hipótesis a validar) y empezar a <strong>registrar datos más ricos</strong> (minutos vistos, fechas, valoraciones). Con esos datos,
+    el recomendador y el modelo de abandono podrán dar todo su valor.</p>
+  </div>
+</section>
+
+<!-- ================================================================ PUNTO DE PARTIDA -->
+<section>
+  <div class="kicker">Punto de partida</div>
+  <h2>Qué datos teníamos y cómo trabajamos</h2>
+  <p class="lead">Antes de construir nada, revisamos a fondo los datos. Lo que encontramos marcó las conclusiones de todo el proyecto.</p>
+
+  <table class="avoid">
+    <tr><th>Fuente</th><th class="r">Volumen</th><th>Para qué sirve</th></tr>
+    <tr><td>Reseñas escritas por usuarios</td><td class="r num">{{ d.resenas | fmt(0) }}</td><td>Reto 1: entender la opinión del público.</td></tr>
+    <tr><td>Catálogo de películas (género, director, actores, sinopsis…)</td><td class="r num">{{ d.peliculas | fmt(0) }}</td><td>Retos 2 y 4: describir el contenido.</td></tr>
+    <tr><td>Visualizaciones: quién vio qué y si llegó al final</td><td class="r num">{{ d.interacciones | fmt(0) }}</td><td>Retos 2, 3 y 4: comportamiento de {{ d.usuarios | fmt(0) }} usuarios.</td></tr>
+  </table>
+
+  <h3>Lo que descubrimos al revisar los datos</h3>
+  <ul>
+    <li><strong>{{ d.abandono_global | pct(1) }} de las visualizaciones se abandonan</strong> antes del final. Es una minoría,
+      así que un modelo que dijera siempre «no abandona» acertaría el 90 % de las veces sin servir para nada.
+      Por eso medimos la calidad con indicadores que no se dejan engañar por eso.</li>
+    <li><strong>No se registra cuánto tiempo ve cada usuario</strong>, solo si terminó o no. Esa información es la que más
+      ayudaría a anticipar el abandono.</li>
+    <li><strong>Las reseñas no indican a qué película pertenecen</strong>, así que el análisis de opiniones funciona como
+      una herramienta independiente.</li>
+    <li>Corregimos pequeños defectos: {{ d.duplicados_resenas | fmt(0) }} reseñas repetidas, una película con el año mal escrito
+      y dos películas distintas con el mismo título.</li>
+  </ul>
+
+  <h3>Cómo garantizamos que los resultados son fiables</h3>
+  <div class="tres">
+    <div class="paso"><b>Siempre contra una referencia</b><span>Cada modelo se compara con una alternativa simple (el azar, lo más popular…). Si no la supera con claridad, lo decimos.</span></div>
+    <div class="paso"><b>Examen con datos nunca vistos</b><span>Los modelos se ajustan con una parte de los datos y se evalúan, una sola vez, con otra parte reservada.</span></div>
+    <div class="paso"><b>Margen de error explícito</b><span>Cada cifra va acompañada de su rango de confianza y las diferencias se someten a pruebas estadísticas.</span></div>
+  </div>
+  <p class="nota">Todo el análisis es reproducible: los cuadernos de código entregados regeneran cada cifra y cada gráfico de este informe.</p>
+</section>
+
+<!-- ================================================================ RETO 1 -->
+<section>
+  <div class="kicker">Reto 1 · Análisis de sentimiento</div>
+  <h2>Leer miles de opiniones en segundos</h2>
+  <p class="lead">El problema: nadie puede leer decenas de miles de reseñas. Necesitamos saber de forma automática si cada
+     opinión es positiva o negativa, para detectar a tiempo el descontento.</p>
+
+  <h3>Qué hicimos</h3>
+  <p>Entrenamos y comparamos varios modelos con {{ s.resenas_usadas | fmt(0) }} reseñas reales. Incluimos un modelo de IA moderno
+     ya entrenado por terceros (DistilBERT), para comprobar si merecía la pena su mayor coste. Cada modelo se evaluó con
+     {{ s.n_test | fmt(0) }} reseñas que no había visto antes.</p>
+
+  <figure class="avoid">
+    <img src="{{ fig.sentimiento }}" alt="Porcentaje de acierto por modelo">
+    <figcaption>Porcentaje de reseñas clasificadas correctamente, con su margen de error. El modelo elegido aparece en verde.</figcaption>
+  </figure>
+
+  <h3>Resultado</h3>
+  <ul>
+    <li>El modelo elegido acierta en <strong>{{ s.accuracy | pct(1) }}</strong> de las reseñas
+      (rango probable: {{ s.accuracy_ic[0] | pct(1) }}–{{ s.accuracy_ic[1] | pct(1) }}). Elegir al azar acertaría la mitad.</li>
+    <li>La IA preentrenada no es mejor ({{ s.distilbert_accuracy | pct(1) }}) y es unas
+      <strong>{{ (s.distilbert_latencia_ms / s.latencia_final_ms) | fmt(0) }} veces más lenta</strong>: no compensa su coste.</li>
+    <li><strong>Ajustado para no dejar pasar quejas.</strong> Dejar sin detectar una reseña negativa cuesta más que revisar de
+      más una positiva (supusimos el doble). Por eso el modelo exige más seguridad antes de dar una opinión por positiva.
+      Sacrificamos unas décimas de acierto global a cambio de detectar más descontento.</li>
+  </ul>
+
+  <div class="caja nilo avoid">
+    <h4>Qué puede hacer Nile Prime con esto</h4>
+    <p>Clasificar automáticamente cada reseña nueva, medir la satisfacción por película o por semana y alertar al equipo de
+    contenidos cuando crezcan las opiniones negativas. Funciona en un ordenador normal, sin infraestructura especial.</p>
+  </div>
+</section>
+
+<!-- ================================================================ RETO 2 -->
+<section>
+  <div class="kicker">Reto 2 · Recomendación personalizada</div>
+  <h2>Un recomendador listo para cuando haya gustos que aprender</h2>
+  <p class="lead">El problema: mostrar a cada usuario las películas que más probablemente quiera ver, combinando lo que
+     sabemos de las películas con lo que hacen usuarios parecidos.</p>
+
+  <h3>Qué hicimos</h3>
+  <p>Construimos un <strong>recomendador híbrido</strong> que mezcla dos ideas: «películas parecidas a las que viste» (por género,
+     director, reparto y sinopsis) y «lo que vieron personas con un historial parecido al tuyo». Lo comparamos con dos
+     referencias simples: recomendar al azar y recomendar lo más popular.</p>
+
+  <figure class="avoid">
+    <img src="{{ fig.recomendador }}" alt="Aciertos por cada 100 usuarios">
+    <figcaption>Cuántas veces, de cada 100 usuarios, la película que el usuario vio de verdad aparece entre las 10 recomendadas.
+      Izquierda: datos reales. Derecha: los mismos usuarios con gustos simulados.</figcaption>
+  </figure>
+
+  <h3>Resultado: un hallazgo importante sobre los datos</h3>
+  <ul>
+    <li><strong>Con los datos reales, ningún método supera al azar</strong> (alrededor de {{ (rc.real['Híbrido (nuestro)'] * 100) | fmt(1) }}
+      aciertos por cada 100 usuarios). Investigamos por qué: las películas que ve cada usuario no comparten género, director
+      ni público entre sí más de lo que lo harían al azar. <strong>El historial no contiene gustos que aprender.</strong></li>
+    <li>Para comprobar que el problema está en los datos y no en el recomendador, <strong>simulamos usuarios con gustos
+      definidos</strong>. Ahí el híbrido acierta <strong>{{ rc.multiplo_sembrada | fmt(1) }} veces más</strong> que recomendar lo más popular,
+      una diferencia estadísticamente muy sólida cuando los gustos simulados son marcados; con gustos débiles la ventaja es pequeña.</li>
+    <li>Además, el híbrido <strong>aprovecha todo el catálogo</strong> ({{ rc.cobertura_hibrido | pct(0) }} de los títulos aparece en alguna
+      recomendación, frente al {{ rc.cobertura_popularidad | pct(1) }} de «lo más popular») y sabe recomendar <strong>películas recién
+      añadidas</strong>, que todavía nadie ha visto.</li>
+  </ul>
+
+  <div class="caja arena avoid">
+    <h4>Qué significa para Nile Prime</h4>
+    <p>El recomendador está construido y probado. Para que aporte valor real hace falta registrar señales de gusto más ricas:
+    valoraciones, minutos vistos, búsquedas o «me gusta». Mientras tanto, el aprendizaje continuo del reto 4 es la vía para
+    descubrir preferencias.</p>
+  </div>
+</section>
+
+<!-- ================================================================ RETO 3 -->
+<section>
+  <div class="kicker">Reto 3 · Predicción de abandono</div>
+  <h2>Dónde está el riesgo de que no terminen la película</h2>
+  <p class="lead">El problema: anticipar qué visualizaciones se van a abandonar para poder actuar antes, por ejemplo
+     recomendando otra película más adecuada.</p>
+
+  <h3>Qué hicimos</h3>
+  <p>Entrenamos un modelo de <strong>Random Forest</strong> (cientos de árboles de decisión combinados) con las características de cada
+     película (duración, año, valoración, géneros) y del usuario (grupo de edad), y comprobamos que lo que detecta no es casualidad.</p>
+
+  
+
+  {% if fig.segmentos %}
+  <figure class="avoid">
+    <img src="{{ fig.segmentos }}" alt="Abandono por segmento">
+    <figcaption>Abandono por grupo de edad en películas de un único género, con su margen de error. En rojo, los segmentos que superan claramente la media.</figcaption>
+  </figure>
+  {% endif %}
+
+  <h3>Resultado</h3>
+  <ul>
+    <li><strong>El riesgo existe, pero está muy concentrado.</strong> El abandono se duplica en combinaciones concretas:
+      los <strong>jóvenes con dramas «puros»</strong> (películas cuyo único género es drama) y los <strong>mayores con comedias puras</strong>.
+      En el resto del catálogo el abandono es prácticamente igual para todos.</li>
+    <li>El modelo encuentra esa señal (prueba estadística: p = {{ a.p_permutacion | fmt(3) }}){% if a.auc_techo %} y aprovecha
+      prácticamente toda: su capacidad de ordenar por riesgo ({{ a.auc | fmt(3) }}) está a la altura del máximo
+      estimado que daría conocer la regla exacta con la que se comportan los datos, que identificamos al revisar el simulador ({{ a.auc_techo | fmt(3) }}){% endif %}. Como el riesgo afecta a pocas
+      visualizaciones, la predicción caso a caso es débil: el 10 % de visualizaciones que el modelo marca como más arriesgadas
+      abandona un {{ a.decil_top | pct(1) }}, frente a un {{ a.decil_resto_media | pct(1) }} en el resto. Con las variables disponibles apenas queda margen para hacerlo mejor.</li>
+    <li><strong>Hoy no compensa lanzar acciones de retención usuario por usuario.</strong> Con los costes supuestos (no detectar un
+      abandono cuesta {{ a.costo_fn | fmt(0) }} veces más que una acción innecesaria), lo óptimo es no intervenir.{% if a.razon_equilibrio_segmento %}
+      Actuar solo sobre los segmentos de riesgo compensaría si perder una visualización costara más de
+      {{ a.razon_equilibrio_segmento | fmt(1) }} veces lo que cuesta la acción.{% endif %}</li>
+  </ul>
+
+  <div class="caja nilo avoid">
+    <h4>Qué puede hacer Nile Prime con esto</h4>
+    <p>Probar con un experimento controlado una <strong>regla sencilla</strong>: no priorizar dramas puros en las recomendaciones a jóvenes ni comedias puras a
+    mayores, y ampliarla solo si reduce el abandono. Es una hipótesis: con los costes supuestos todavía no está justificado actuar. Y empezar a registrar <strong>en qué minuto se abandona</strong>: es el dato
+    que más mejoraría la predicción.</p>
+  </div>
+</section>
+
+<!-- ================================================================ RETO 4 -->
+<section>
+  <div class="kicker">Reto 4 · Aprendizaje por refuerzo</div>
+  <h2>Un recomendador que aprende de cada respuesta</h2>
+  <p class="lead">El problema: si el histórico no enseña los gustos, ¿cómo mejorar las recomendaciones? Dejando que el sistema
+     aprenda probando y observando si el usuario termina la película.</p>
+
+  <h3>Qué hicimos</h3>
+  <p>Usamos el simulador de usuarios proporcionado, que imita cómo reaccionan los usuarios a una recomendación. Primero lo
+     reparamos: tenía <strong>dos fallos que impedían usarlo</strong>, y los corregimos sin cambiar sus reglas. Después entrenamos un
+     <strong>agente de aprendizaje por refuerzo</strong> (Q-learning). El agente recomienda, observa si el usuario termina la película y ajusta
+     sus preferencias, como haría una persona aprendiendo por experiencia. Repetimos cada experimento {{ rf.n_semillas }} veces.</p>
+
+  <figure class="avoid">
+    <img src="{{ fig.refuerzo }}" alt="Abandonos por cada 1.000 recomendaciones">
+    <figcaption>Abandonos provocados por cada 1.000 recomendaciones en el simulador, una vez que el agente ha aprendido.</figcaption>
+  </figure>
+
+  <h3>Resultado</h3>
+  <ul>
+    <li>El recomendador estático del reto 2 <strong>provoca más abandonos que recomendar al azar</strong>
+      ({{ (1000 * (1 - rf.original.hibrido)) | fmt(1) }} frente a {{ (1000 * (1 - rf.original.azar)) | fmt(1) }} por cada 1.000), porque sugiere con mucha frecuencia
+      dramas puros, que son justo los que los jóvenes abandonan. No se diseñó pensando en el abandono.</li>
+    <li>El agente que aprende <strong>baja a {{ (1000 * (1 - rf.original.rl)) | fmt(2) }} abandonos por cada 1.000</strong>, prácticamente el
+      óptimo, y aprende a evitar el contenido problemático en unas {{ rf.evitar_youth | fmt(0) }} interacciones por grupo de edad.</li>
+    <li>Aprende <strong>por sí solo a evitar el mismo tipo de contenido</strong> que el modelo de abandono señaló en los datos
+      históricos. Para identificar el segmento completo, y no solo esquivarlo, necesita miles de interacciones.</li>
+    <li>En un escenario más exigente, en el que penalizan todas las películas que <em>incluyen</em> esos géneros, la mejora es
+      mayor: {{ (100 * rf.contiene.mejora_vs_hibrido) | fmt(1) }} puntos más de películas vistas hasta el final que con el recomendador estático.</li>
+  </ul>
+
+  <div class="caja nilo avoid">
+    <h4>Qué puede hacer Nile Prime con esto</h4>
+    <p>Llevar este enfoque a producción de forma gradual: un pequeño porcentaje de recomendaciones lo gestiona el agente que
+    aprende, se compara con el sistema actual y, si mejora la tasa de películas terminadas, se amplía.</p>
+  </div>
+</section>
+
+<!-- ================================================================ CONCLUSIONES -->
+<section>
+  <div class="kicker">Conclusiones</div>
+  <h2>Cómo encajan las piezas y próximos pasos</h2>
+  <p class="lead">Los cuatro retos cuentan una misma historia: con los datos actuales, la ventaja está en leer opiniones y en aprender en tiempo real.</p>
+
+  <div class="tres">
+    <div class="paso"><b>Escuchar</b><span>El clasificador de reseñas mide la satisfacción a escala y alerta del descontento.</span></div>
+    <div class="paso"><b>Entender el riesgo</b><span>El abandono se concentra en combinaciones de público y tipo de película identificadas.</span></div>
+    <div class="paso"><b>Aprender y adaptar</b><span>El agente de aprendizaje aprende solo a evitar esas combinaciones al recomendar.</span></div>
+  </div>
+
+  <h3>Hoja de ruta recomendada</h3>
+  <div class="hoja"><div class="n">1</div><div class="t"><b>Inmediato · Desplegar el clasificador de reseñas.</b>
+    Panel semanal de satisfacción por título y alertas de opiniones negativas.</div></div>
+  <div class="hoja"><div class="n">2</div><div class="t"><b>Inmediato · Probar la regla de abandono (experimento A/B).</b>
+    No priorizar dramas puros para jóvenes ni comedias puras para mayores en un grupo de prueba, y medir si baja el abandono.</div></div>
+  <div class="hoja"><div class="n">3</div><div class="t"><b>1–3 meses · Registrar mejores datos.</b>
+    Minutos vistos y momento del abandono, fecha y hora, dispositivo, valoraciones explícitas y título asociado a cada reseña.</div></div>
+  <div class="hoja"><div class="n">4</div><div class="t"><b>3–6 meses · Aprendizaje continuo en producción.</b>
+    Desplegar el agente de forma gradual y controlada, y reentrenar el recomendador y el modelo de abandono con los nuevos datos.</div></div>
+
+  <h3>Limitaciones que conviene conocer</h3>
+  <ul>
+    <li>Los datos de visualizaciones se comportan como si se hubieran generado al azar: no reflejan gustos reales, lo que limita lo que cualquier modelo puede aprender de ellos.</li>
+    <li>Los costes de equivocarse (quejas no detectadas, acciones de retención) son supuestos razonables. Nile Prime debería sustituirlos por sus cifras reales.</li>
+    <li>El aprendizaje por refuerzo se evaluó en un simulador. Su efecto real debe confirmarse con usuarios mediante experimentos controlados.</li>
+    <li>El simulador es más optimista que los datos: fuera de los segmentos de riesgo nadie abandona, cuando en el histórico lo hace un 10 %. Con tasas de abandono como las observadas, la mejora sobre el recomendador estático baja a {{ (100 * rf.calibrado.mejora_vs_hibrido) | fmt(1) }} puntos.</li>
+    <li>El modelo de IA más grande disponible (RoBERTa) no se evaluó por falta de tarjeta gráfica. Dado el resultado de DistilBERT, no se espera que cambie la recomendación.</li>
+  </ul>
+</section>
+
+<!-- ================================================================ ANEXO -->
+<section>
+  <div class="kicker">Anexo</div>
+  <h2>Glosario y contenido técnico entregado</h2>
+
+  <dl class="glosario">
+    <dt>Acierto (exactitud)</dt><dd>Porcentaje de casos que el modelo clasifica correctamente.</dd>
+    <dt>Margen de error / rango probable</dt><dd>Intervalo en el que, con un 95 % de confianza, se encuentra el valor real de una cifra.</dd>
+    <dt>Prueba estadística (p)</dt><dd>Mide la probabilidad de ver un resultado así por pura casualidad. Cuanto más pequeña, más fiable es la diferencia (habitualmente, menos de 0,05).</dd>
+    <dt>Capacidad de ordenar por riesgo (AUC)</dt><dd>Indicador de 0,5 (como lanzar una moneda) a 1 (perfecto) que mide si el modelo pone los casos de riesgo por delante.</dd>
+    <dt>Recomendador híbrido</dt><dd>Combina «películas parecidas» (contenido) con «lo que vieron usuarios parecidos» (comportamiento).</dd>
+    <dt>Gustos simulados</dt><dd>Datos generados a propósito con preferencias conocidas, para comprobar que un método es capaz de descubrirlas.</dd>
+    <dt>Aprendizaje por refuerzo</dt><dd>Técnica en la que un sistema aprende probando acciones y recibiendo una recompensa (aquí, que el usuario termine la película).</dd>
+    <dt>Random Forest</dt><dd>Modelo que combina muchos árboles de decisión y vota el resultado. Es robusto y permite ver qué variables pesan más.</dd>
+  </dl>
+
+  <h3>Material técnico</h3>
+  <table>
+    <tr><th>Cuaderno</th><th>Contenido</th></tr>
+    <tr><td>00 · EDA y preparación</td><td>Calidad de datos, pruebas estadísticas de abandono y de estructura de preferencias.</td></tr>
+    <tr><td>01 · Sentimiento</td><td>Comparación de modelos de texto, calibración, umbral por coste y análisis de errores.</td></tr>
+    <tr><td>02 · Recomendador</td><td>Modelos por contenido, colaborativo e híbrido; evaluación reservando una película por usuario, pruebas estadísticas y gustos simulados.</td></tr>
+    <tr><td>03 · Abandono</td><td>Random Forest, prueba de permutación, calibración, umbral por coste e importancia de variables.</td></tr>
+    <tr><td>04 · Aprendizaje por refuerzo</td><td>Corrección del simulador, política óptima, Q-learning y comparación con el recomendador estático.</td></tr>
+  </table>
+  <p class="nota">Cifras generadas automáticamente a partir de los resultados de los cuadernos ({{ r.fuente }}).</p>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+{
+  "modo": "full",
+  "seed": 42,
+  "filas": {
+    "resenas": 50000,
+    "metadatos": 999,
+    "interacciones": 100624
+  },
+  "tiene_columna_tiempo_visto": false,
+  "usuarios": 10000,
+  "titulos_en_interacciones": 999,
+  "titulos_sin_metadatos": 0,
+  "nulos_metadatos_originales": {
+    "Certificate": 101,
+    "Meta_score": 157,
+    "Gross": 169
+  },
+  "nulos_metadatos_tras_carga": {
+    "Meta_score": 156,
+    "Gross": 168
+  },
+  "nulos_interacciones": 0,
+  "duplicados": {
+    "resenas_por_texto": 422,
+    "interacciones_exactas": 1,
+    "titulos_repetidos_metadatos_crudos": 1,
+    "pares_usuario_titulo_repetidos": 0
+  },
+  "balance_resenas_positiva": 0.5,
+  "longitud_resena_palabras": {
+    "mediana": 171.0,
+    "p95": 585.0
+  },
+  "abandono_global": {
+    "n": 100623,
+    "abandonos": 10315,
+    "tasa": 0.10251135426294188,
+    "ic95": [
+      0.10065233804126857,
+      0.1044007200883031
+    ],
+    "accuracy_baseline_mayoritaria": 0.8974886457370581
+  },
+  "abandono_por_edad": {
+    "tasas": {
+      "youth": 0.1084187451863262,
+      "seniors": 0.10132358273903058,
+      "adults": 0.09777040831433394
+    },
+    "ic95": {
+      "youth": [
+        0.10514653522687771,
+        0.11178006749730547
+      ],
+      "seniors": [
+        0.09811845993691479,
+        0.10462125827590144
+      ],
+      "adults": [
+        0.09464838249424937,
+        0.10098392908339676
+      ]
+    },
+    "chi2": 21.562928999109992,
+    "p": 2.078114444301323e-05,
+    "gl": 2,
+    "cramer_v": 0.014638792193867722
+  },
+  "abandono_por_genero": {
+    "n_generos": 21,
+    "n_min": 1770,
+    "min": {
+      "genero": "Crime",
+      "tasa": 0.09517426273458444
+    },
+    "max": {
+      "genero": "Western",
+      "tasa": 0.11397954213346323
+    },
+    "chi2": 21.98205002938352,
+    "p": 0.3414854514817025,
+    "gl": 20,
+    "cramer_v": 0.009273767848103787,
+    "generos_ic_excluye_global_sin_corregir": 2,
+    "nota": "Observaciones no independientes (explode multi-etiqueta) y 21 comparaciones."
+  },
+  "popularidad": {
+    "por_titulo": {
+      "min": 71,
+      "mediana": 100.0,
+      "p90": 114.0,
+      "max": 221,
+      "q1": 93.0,
+      "q3": 107.0,
+      "segundo_max": 133,
+      "titulo_max": "Drishyam",
+      "max_es_colision_de_titulo": true
+    },
+    "por_usuario": {
+      "min": 1,
+      "mediana": 10.0,
+      "p90": 14.0,
+      "max": 24
+    },
+    "usuarios": 10000,
+    "titulos": 999,
+    "densidad_matriz": 0.010072372372372372,
+    "concentracion_top10pct_titulos": 0.11917752402532224,
+    "sd_por_titulo": 11.04017747979254,
+    "sd_por_titulo_sin_maximo": 10.367416249894411,
+    "sd_esperada_multinomial_uniforme": 10.031096608818586
+  },
+  "estructura_preferencias": {
+    "edad_x_titulo": {
+      "chi2": 1928.7637334956842,
+      "gl": 1996,
+      "p": 0.8567364461748477,
+      "n": 100623,
+      "cramer_v_bruta": 0.09789846609763617,
+      "cramer_v_esperada_h0": 0.09959020812547596,
+      "cramer_v_corregida_bergsma": 0.0,
+      "max_pct_un_grupo_por_titulo": 0.5555555555555556,
+      "mediana_pct_max_por_titulo": 0.37735849056603776
+    },
+    "media_por_grupo_edad": {
+      "adults": {
+        "anio_medio": 1991.3547212270157,
+        "anio_ic95": 0.24765713480221963,
+        "rating_medio": 7.948971071566043,
+        "rating_ic95": 0.00292099457566619,
+        "n": 33773
+      },
+      "seniors": {
+        "anio_medio": 1991.1545388613563,
+        "anio_ic95": 0.25243481886139174,
+        "rating_medio": 7.949087392723317,
+        "rating_ic95": 0.0029698384785248133,
+        "n": 33092
+      },
+      "youth": {
+        "anio_medio": 1991.2925824989632,
+        "anio_ic95": 0.24790693287954063,
+        "rating_medio": 7.945441080632739,
+        "rating_ic95": 0.00290917954442031,
+        "n": 33758
+      }
+    },
+    "coherencia_genero": {
+      "observado": 0.659240467283067,
+      "nulo_media": 0.6594387477964978,
+      "nulo_sd": 0.0006764028203386512,
+      "nulo_ic95": [
+        0.6581146215284325,
+        0.660674386394329
+      ],
+      "p_mayor": 0.6318407960199005,
+      "p_dos_colas": 0.746268656716418,
+      "n_pares": 505732,
+      "n_perm": 200
+    },
+    "coherencia_director": {
+      "observado": 0.0023787302365679847,
+      "nulo_media": 0.002371284306941901,
+      "nulo_sd": 7.414164673400497e-05,
+      "nulo_ic95": [
+        0.002222744015548927,
+        0.002512031423581494
+      ],
+      "p_mayor": 0.4577114427860697,
+      "p_dos_colas": 0.9154228855721394,
+      "n_pares": 505732,
+      "n_perm": 200
+    },
+    "n_usuarios": 10000,
+    "n_replicas_permutacion": 200,
+    "hitrate10_azar": 0.01001001001001001
+  }
+}

@@ -1,0 +1,2241 @@
+{
+  "modo": "full",
+  "config": {
+    "semillas_evaluacion": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "semillas_ajuste": [
+      100,
+      101,
+      102,
+      103,
+      104
+    ],
+    "semilla_global": 42,
+    "problema": "bandit contextual, episodios de 1 paso (gamma irrelevante)",
+    "estado": "grupo de edad (youth, adults, seniors)",
+    "acciones": "pelicula (1.000 brazos), top-10 del hibrido (re-ranking) y genero exacto (202 brazos)",
+    "n_episodios": 100000,
+    "n_episodios_ajuste": 33333,
+    "hiperparametros": {
+      "epsilon": "inverso",
+      "eps0": 0.3,
+      "eps_min": 0.01,
+      "fraccion_decaimiento": 0.5,
+      "alpha": 0.1,
+      "q0": 0.5,
+      "c_ucb": 1.0,
+      "actualizacion": "Q[s,a] += alpha*(r - Q[s,a])"
+    },
+    "espacio_de_busqueda": {
+      "epsilon": [
+        "constante (0.3)",
+        "exponencial",
+        "inverso"
+      ],
+      "alpha": [
+        0.1,
+        "1/N"
+      ],
+      "q0": [
+        1.0,
+        0.5,
+        0.0
+      ]
+    },
+    "ajuste": [
+      {
+        "epsilon": "inverso",
+        "alpha": "0.1",
+        "q0": 0.5,
+        "regret_rel_original": 0.029984675131449666,
+        "regret_rel_contiene": 0.031534094292819004,
+        "regret_rel_calibrado": 0.10671045227527205,
+        "regret_rel_medio": 0.05607640723318024
+      },
+      {
+        "epsilon": "exponencial",
+        "alpha": "0.1",
+        "q0": 0.5,
+        "regret_rel_original": 0.05566401500487269,
+        "regret_rel_contiene": 0.05686023882247296,
+        "regret_rel_calibrado": 0.08742265337733776,
+        "regret_rel_medio": 0.0666489690682278
+      },
+      {
+        "epsilon": "inverso",
+        "alpha": "1/N",
+        "q0": 0.0,
+        "regret_rel_original": 0.0702899409516259,
+        "regret_rel_contiene": 0.07402446482994877,
+        "regret_rel_calibrado": 0.11580096707227044,
+        "regret_rel_medio": 0.08670512428461503
+      },
+      {
+        "epsilon": "inverso",
+        "alpha": "1/N",
+        "q0": 0.5,
+        "regret_rel_original": 0.0702899409516259,
+        "regret_rel_contiene": 0.07402446482994877,
+        "regret_rel_calibrado": 0.11580096707227044,
+        "regret_rel_medio": 0.08670512428461503
+      },
+      {
+        "epsilon": "exponencial",
+        "alpha": "1/N",
+        "q0": 0.5,
+        "regret_rel_original": 0.123389075278892,
+        "regret_rel_contiene": 0.14343589759962522,
+        "regret_rel_calibrado": 0.19793890020358543,
+        "regret_rel_medio": 0.15492129102736754
+      },
+      {
+        "epsilon": "exponencial",
+        "alpha": "1/N",
+        "q0": 0.0,
+        "regret_rel_original": 0.123389075278892,
+        "regret_rel_contiene": 0.14343589759962522,
+        "regret_rel_calibrado": 0.19812543608601915,
+        "regret_rel_medio": 0.15498346965484544
+      },
+      {
+        "epsilon": "constante",
+        "alpha": "0.1",
+        "q0": 0.5,
+        "regret_rel_original": 0.30607574658023223,
+        "regret_rel_contiene": 0.3092630846925106,
+        "regret_rel_calibrado": 0.3586913050561864,
+        "regret_rel_medio": 0.32467671210964305
+      },
+      {
+        "epsilon": "inverso",
+        "alpha": "1/N",
+        "q0": 1.0,
+        "regret_rel_original": 0.30488490890047376,
+        "regret_rel_contiene": 0.3347089123047909,
+        "regret_rel_calibrado": 0.4521167266531187,
+        "regret_rel_medio": 0.3639035159527944
+      },
+      {
+        "epsilon": "exponencial",
+        "alpha": "1/N",
+        "q0": 1.0,
+        "regret_rel_original": 0.3174650374633289,
+        "regret_rel_contiene": 0.3444189156503116,
+        "regret_rel_calibrado": 0.46123625238003807,
+        "regret_rel_medio": 0.3743734018312262
+      },
+      {
+        "epsilon": "inverso",
+        "alpha": "0.1",
+        "q0": 1.0,
+        "regret_rel_original": 0.30488490890047376,
+        "regret_rel_contiene": 0.3347089123047909,
+        "regret_rel_calibrado": 0.5308141041114953,
+        "regret_rel_medio": 0.3901359751055867
+      },
+      {
+        "epsilon": "exponencial",
+        "alpha": "0.1",
+        "q0": 1.0,
+        "regret_rel_original": 0.3174650374633289,
+        "regret_rel_contiene": 0.3444189156503116,
+        "regret_rel_calibrado": 0.5315561003283554,
+        "regret_rel_medio": 0.397813351147332
+      },
+      {
+        "epsilon": "constante",
+        "alpha": "1/N",
+        "q0": 0.0,
+        "regret_rel_original": 0.4530372953875567,
+        "regret_rel_contiene": 0.49288934197054846,
+        "regret_rel_calibrado": 0.6230083896947732,
+        "regret_rel_medio": 0.5229783423509594
+      },
+      {
+        "epsilon": "constante",
+        "alpha": "1/N",
+        "q0": 0.5,
+        "regret_rel_original": 0.4530372953875567,
+        "regret_rel_contiene": 0.49288934197054846,
+        "regret_rel_calibrado": 0.6230083896947732,
+        "regret_rel_medio": 0.5229783423509594
+      },
+      {
+        "epsilon": "constante",
+        "alpha": "1/N",
+        "q0": 1.0,
+        "regret_rel_original": 0.5134951943908189,
+        "regret_rel_contiene": 0.5452302145631867,
+        "regret_rel_calibrado": 0.6474694498585976,
+        "regret_rel_medio": 0.568731619604201
+      },
+      {
+        "epsilon": "constante",
+        "alpha": "0.1",
+        "q0": 1.0,
+        "regret_rel_original": 0.5134951943908189,
+        "regret_rel_contiene": 0.5452302145631867,
+        "regret_rel_calibrado": 0.6506778654156415,
+        "regret_rel_medio": 0.5698010914565491
+      },
+      {
+        "epsilon": "constante",
+        "alpha": "0.1",
+        "q0": 0.0,
+        "regret_rel_original": 0.507418871200217,
+        "regret_rel_contiene": 0.5501866860001547,
+        "regret_rel_calibrado": 1.6253480649830303,
+        "regret_rel_medio": 0.894317874061134
+      },
+      {
+        "epsilon": "exponencial",
+        "alpha": "0.1",
+        "q0": 0.0,
+        "regret_rel_original": 0.2859536488968844,
+        "regret_rel_contiene": 0.5342010808425135,
+        "regret_rel_calibrado": 3.841447100427493,
+        "regret_rel_medio": 1.553867276722297
+      },
+      {
+        "epsilon": "inverso",
+        "alpha": "0.1",
+        "q0": 0.0,
+        "regret_rel_original": 1.3996308986610277,
+        "regret_rel_contiene": 0.5714800001874033,
+        "regret_rel_calibrado": 3.911891302929406,
+        "regret_rel_medio": 1.9610007339259454
+      }
+    ],
+    "criterio_convergencia": "media movil del regret (ventana 2000) <= 10 % del regret de la politica aleatoria",
+    "criterio_descubrimiento": "(a) politica voraz sin riesgo de forma estable; (b) >= 90 % (y 50 %) de las peliculas de riesgo con Q < media de Q de las no penalizadas",
+    "ventana_recompensa_final": 5000,
+    "recomendador_hibrido": {
+      "alpha": 0.5,
+      "positivo": "cualquiera",
+      "k": 10,
+      "fuente": "json",
+      "top1_drama_exacto_pct": {
+        "catalogo": 8.5,
+        "youth": 26.11529119023639,
+        "adults": 24.84529061676487,
+        "seniors": 25.692010153511426
+      }
+    },
+    "calibracion_modo_calibrado": {
+      "base": 0.0985,
+      "segmento": {
+        "youth": 0.206,
+        "adults": 0.2085,
+        "seniors": 0.211
+      }
+    },
+    "ic95": "t de Student entre semillas (n = nº de semillas)",
+    "dqn": "omitido: con 3 estados el caso tabular es exacto (primer escalon de la politica de plazo)",
+    "versiones": {
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "scipy": "1.18.1",
+      "python": "3.13.9"
+    }
+  },
+  "baseline": {
+    "nombre": "politica aleatoria (valor esperado exacto) y recomendador hibrido top-1 sin RL",
+    "metricas": {
+      "original": {
+        "aleatoria": 0.9901748824821364,
+        "hibrido_top1": 0.9734946284646651,
+        "optimo": 1.0
+      },
+      "contiene": {
+        "aleatoria": 0.8846950736909056,
+        "hibrido_top1": 0.8691492004810034,
+        "optimo": 1.0
+      },
+      "calibrado": {
+        "aleatoria": 0.8978813566977731,
+        "hibrido_top1": 0.8919819723124934,
+        "optimo": 0.9015
+      }
+    }
+  },
+  "metricas": {
+    "qlearning_recompensa_final_original": {
+      "valor": 0.9999480068683624,
+      "ic95": [
+        0.9999070080963993,
+        0.9999890056403254
+      ],
+      "sd": 5.731233125848064e-05,
+      "n": 10
+    },
+    "qlearning_regret_acumulado_original": {
+      "valor": 21.475000751018523,
+      "ic95": [
+        20.801346597551817,
+        22.14865490448523
+      ],
+      "sd": 0.9417035718032634,
+      "n": 10
+    },
+    "qlearning_valor_voraz_final_original": {
+      "valor": 1.0,
+      "ic95": [
+        1.0,
+        1.0
+      ],
+      "sd": 0.0,
+      "n": 10
+    },
+    "qlearning_recompensa_final_contiene": {
+      "valor": 0.9989299833774566,
+      "ic95": [
+        0.9987879145467368,
+        0.9990720522081765
+      ],
+      "sd": 0.00019859853107466702,
+      "n": 10
+    },
+    "qlearning_regret_acumulado_contiene": {
+      "valor": 279.7600046813488,
+      "ic95": [
+        258.69260006675734,
+        300.82740929594024
+      ],
+      "sd": 29.450200925935256,
+      "n": 10
+    },
+    "qlearning_valor_voraz_final_contiene": {
+      "valor": 1.0,
+      "ic95": [
+        1.0,
+        1.0
+      ],
+      "sd": 0.0,
+      "n": 10
+    },
+    "qlearning_recompensa_final_calibrado": {
+      "valor": 0.9014738202095032,
+      "ic95": [
+        0.9014522343348836,
+        0.9014954060841227
+      ],
+      "sd": 3.017497201654748e-05,
+      "n": 10
+    },
+    "qlearning_regret_acumulado_calibrado": {
+      "valor": 15.856829905506753,
+      "ic95": [
+        10.945630070728011,
+        20.768029740285495
+      ],
+      "sd": 6.8653839695791525,
+      "n": 10
+    },
+    "qlearning_valor_voraz_final_calibrado": {
+      "valor": 0.9015000000000001,
+      "ic95": [
+        0.9015,
+        0.9015000000000002
+      ],
+      "sd": 1.1702778228589004e-16,
+      "n": 10
+    },
+    "reranking_recompensa_final_original": {
+      "valor": 0.9958960056304932,
+      "ic95": [
+        0.9954398566726302,
+        0.9963521545883561
+      ],
+      "sd": 0.00063765227406864,
+      "n": 10
+    },
+    "reranking_regret_acumulado_original": {
+      "valor": 681.0400270164013,
+      "ic95": [
+        636.0547619639018,
+        726.0252920689007
+      ],
+      "sd": 62.885064332270886,
+      "n": 10
+    },
+    "reranking_recompensa_final_contiene": {
+      "valor": 0.9353519737720489,
+      "ic95": [
+        0.9337512734168496,
+        0.9369526741272483
+      ],
+      "sd": 0.002237624802164032,
+      "n": 10
+    },
+    "reranking_regret_acumulado_contiene": {
+      "valor": 7641.770233225822,
+      "ic95": [
+        7528.242884383933,
+        7755.297582067711
+      ],
+      "sd": 158.7002905743167,
+      "n": 10
+    },
+    "reranking_recompensa_final_calibrado": {
+      "valor": 0.8968730628490448,
+      "ic95": [
+        0.8963275707254292,
+        0.8974185549726603
+      ],
+      "sd": 0.0007625454078413322,
+      "n": 10
+    },
+    "reranking_regret_acumulado_calibrado": {
+      "valor": 568.2696085512605,
+      "ic95": [
+        550.7780462812823,
+        585.7611708212387
+      ],
+      "sd": 24.45151801008202,
+      "n": 10
+    },
+    "genero_recompensa_final_original": {
+      "valor": 0.9999830067157746,
+      "ic95": [
+        0.9999633375646411,
+        1.000002675866908
+      ],
+      "sd": 2.749557733951251e-05,
+      "n": 10
+    },
+    "genero_regret_acumulado_original": {
+      "valor": 3.135000091791153,
+      "ic95": [
+        2.4567614911879874,
+        3.813238692394319
+      ],
+      "sd": 0.9481121869968767,
+      "n": 10
+    },
+    "genero_valor_voraz_final_original": {
+      "valor": 1.0,
+      "ic95": [
+        1.0,
+        1.0
+      ],
+      "sd": 0.0,
+      "n": 10
+    },
+    "genero_recompensa_final_contiene": {
+      "valor": 0.9990229725837707,
+      "ic95": [
+        0.9989058153424861,
+        0.9991401298250553
+      ],
+      "sd": 0.0001637745303173176,
+      "n": 10
+    },
+    "genero_regret_acumulado_contiene": {
+      "valor": 238.99000293016434,
+      "ic95": [
+        227.8352916694484,
+        250.14471419088028
+      ],
+      "sd": 15.59321111967203,
+      "n": 10
+    },
+    "genero_valor_voraz_final_contiene": {
+      "valor": 1.0,
+      "ic95": [
+        1.0,
+        1.0
+      ],
+      "sd": 0.0,
+      "n": 10
+    },
+    "genero_recompensa_final_calibrado": {
+      "valor": 0.9014932572841644,
+      "ic95": [
+        0.9014857098528345,
+        0.9015008047154943
+      ],
+      "sd": 1.055058148859454e-05,
+      "n": 10
+    },
+    "genero_regret_acumulado_calibrado": {
+      "valor": 3.802333819862983,
+      "ic95": [
+        0.2613418134745862,
+        7.343325826251379
+      ],
+      "sd": 4.949965502302155,
+      "n": 10
+    },
+    "genero_valor_voraz_final_calibrado": {
+      "valor": 0.9015000000000001,
+      "ic95": [
+        0.9015,
+        0.9015000000000002
+      ],
+      "sd": 1.1702778228589004e-16,
+      "n": 10
+    },
+    "mejora_qlearning_vs_hibrido_top1_original": {
+      "valor": 0.026453357934951783,
+      "ic95": [
+        0.02641235916298875,
+        0.026494356706914815
+      ],
+      "sd": 5.731233125848064e-05,
+      "n": 10
+    },
+    "mejora_qlearning_vs_azar_original": {
+      "valor": 0.009773117303848267,
+      "ic95": [
+        0.009732118531885235,
+        0.0098141160758113
+      ],
+      "sd": 5.731233125848064e-05,
+      "n": 10
+    },
+    "mejora_qlearning_vs_hibrido_top1_contiene": {
+      "valor": 0.12978077530860901,
+      "ic95": [
+        0.1296387064778891,
+        0.12992284413932892
+      ],
+      "sd": 0.00019859853107466702,
+      "n": 10
+    },
+    "mejora_qlearning_vs_azar_contiene": {
+      "valor": 0.11423493027687073,
+      "ic95": [
+        0.11409286144615084,
+        0.11437699910759062
+      ],
+      "sd": 0.00019859853107466702,
+      "n": 10
+    },
+    "mejora_qlearning_vs_hibrido_top1_calibrado": {
+      "valor": 0.00949186086654663,
+      "ic95": [
+        0.009470274991927123,
+        0.009513446741166139
+      ],
+      "sd": 3.017497201654748e-05,
+      "n": 10
+    },
+    "mejora_qlearning_vs_azar_calibrado": {
+      "valor": 0.0035924911499023438,
+      "ic95": [
+        0.003570905275282835,
+        0.0036140770245218527
+      ],
+      "sd": 3.017497201654748e-05,
+      "n": 10
+    }
+  },
+  "por_modo": {
+    "original": {
+      "peliculas_a_evitar": {
+        "youth": 87,
+        "adults": 0,
+        "seniors": 13
+      },
+      "valores_esperados_exactos": {
+        "azar": 0.9901748824821364,
+        "hibrido_top1": 0.9734946284646651,
+        "hibrido_topk_medio": 0.9737841249018613,
+        "oraculo_topk": 0.9989833338302376,
+        "optimo": 1.0,
+        "brecha": 0.009825117517863635
+      },
+      "azar_por_grupo": {
+        "youth": 0.9739,
+        "adults": 1.0,
+        "seniors": 0.99675
+      },
+      "hibrido_top1_por_grupo": {
+        "youth": 0.9216541264292908,
+        "adults": 1.0,
+        "seniors": 0.9993276320560861
+      },
+      "agentes": {
+        "Q-learning (película)": {
+          "recompensa_final": {
+            "valor": 0.9999480068683624,
+            "ic95": [
+              0.9999070080963993,
+              0.9999890056403254
+            ],
+            "sd": 5.731233125848064e-05,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.9999,
+            "ic95": [
+              0.9997988332561639,
+              1.000001166743836
+            ],
+            "sd": 0.00014142135623729392,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 21.475000751018523,
+            "ic95": [
+              20.801346597551817,
+              22.14865490448523
+            ],
+            "sd": 0.9417035718032634,
+            "n": 10
+          },
+          "valor_voraz_final": {
+            "valor": 1.0,
+            "ic95": [
+              1.0,
+              1.0
+            ],
+            "sd": 0.0,
+            "n": 10
+          },
+          "convergencia_pasos": {
+            "media": 3895.5,
+            "sd": 1070.817574462512,
+            "semillas_que_convergen": 10
+          }
+        },
+        "UCB (película)": {
+          "recompensa_final": {
+            "valor": 0.9972080290317535,
+            "ic95": [
+              0.9968570240737351,
+              0.997559033989772
+            ],
+            "sd": 0.000490671097306599,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.9972,
+            "ic95": [
+              0.9968368002742943,
+              0.9975631997257056
+            ],
+            "sd": 0.0005077182070575963,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 452.7450157701969,
+            "ic95": [
+              442.2281949530421,
+              463.26183658735175
+            ],
+            "sd": 14.701501766988057,
+            "n": 10
+          },
+          "valor_voraz_final": {
+            "valor": 1.0,
+            "ic95": [
+              1.0,
+              1.0
+            ],
+            "sd": 0.0,
+            "n": 10
+          },
+          "convergencia_pasos": {
+            "media": 25256.7,
+            "sd": 2705.6395033747976,
+            "semillas_que_convergen": 10
+          }
+        },
+        "Q-learning (re-ranking top-10)": {
+          "recompensa_final": {
+            "valor": 0.9958960056304932,
+            "ic95": [
+              0.9954398566726302,
+              0.9963521545883561
+            ],
+            "sd": 0.00063765227406864,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.99584,
+            "ic95": [
+              0.9949954613258887,
+              0.9966845386741112
+            ],
+            "sd": 0.001180583659796187,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 681.0400270164013,
+            "ic95": [
+              636.0547619639018,
+              726.0252920689007
+            ],
+            "sd": 62.885064332270886,
+            "n": 10
+          },
+          "valor_voraz_final": null,
+          "convergencia_pasos": {
+            "media": 72713.3,
+            "sd": 10835.55469584583,
+            "semillas_que_convergen": 10
+          }
+        },
+        "Q-learning (género exacto)": {
+          "recompensa_final": {
+            "valor": 0.9999830067157746,
+            "ic95": [
+              0.9999633375646411,
+              1.000002675866908
+            ],
+            "sd": 2.749557733951251e-05,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.9999600000000001,
+            "ic95": [
+              0.9998996758089921,
+              1.000020324191008
+            ],
+            "sd": 8.43274042711475e-05,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 3.135000091791153,
+            "ic95": [
+              2.4567614911879874,
+              3.813238692394319
+            ],
+            "sd": 0.9481121869968767,
+            "n": 10
+          },
+          "valor_voraz_final": {
+            "valor": 1.0,
+            "ic95": [
+              1.0,
+              1.0
+            ],
+            "sd": 0.0,
+            "n": 10
+          },
+          "convergencia_pasos": {
+            "media": 2000.0,
+            "sd": 0.0,
+            "semillas_que_convergen": 10
+          }
+        },
+        "Q-learning (película, Q0 = 1)": {
+          "recompensa_final": {
+            "valor": 0.9999480068683624,
+            "ic95": [
+              0.9999070080963993,
+              0.9999890056403254
+            ],
+            "sd": 5.731233125848064e-05,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.9999,
+            "ic95": [
+              0.9997988332561639,
+              1.000001166743836
+            ],
+            "sd": 0.00014142135623729392,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 113.55500392317772,
+            "ic95": [
+              108.81920509079461,
+              118.29080275556083
+            ],
+            "sd": 6.620190275450165,
+            "n": 10
+          },
+          "valor_voraz_final": {
+            "valor": 1.0,
+            "ic95": [
+              1.0,
+              1.0
+            ],
+            "sd": 0.0,
+            "n": 10
+          },
+          "convergencia_pasos": {
+            "media": 22166.1,
+            "sd": 2296.7810058620935,
+            "semillas_que_convergen": 10
+          }
+        }
+      },
+      "descubrimiento_interacciones_del_grupo": {
+        "Q-learning (película)": {
+          "youth": {
+            "evitar": {
+              "media": 3.2,
+              "sd": 1.2292725943057181,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 24436.5,
+              "sd": 2831.9626586521226,
+              "semillas_que_lo_alcanzan": 2
+            },
+            "identificar": {
+              "media": null,
+              "sd": null,
+              "semillas_que_lo_alcanzan": 0
+            }
+          },
+          "seniors": {
+            "evitar": {
+              "media": 3.3,
+              "sd": 1.2516655570345725,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 14624.4,
+              "sd": 10644.473368842631,
+              "semillas_que_lo_alcanzan": 5
+            },
+            "identificar": {
+              "media": null,
+              "sd": null,
+              "semillas_que_lo_alcanzan": 0
+            }
+          }
+        },
+        "Q-learning (película, Q0 = 1)": {
+          "youth": {
+            "evitar": {
+              "media": 1906.6,
+              "sd": 3299.0173351738813,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 2299.3,
+              "sd": 202.57731034512892,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 7547.2,
+              "sd": 952.5868639307039,
+              "semillas_que_lo_alcanzan": 10
+            }
+          },
+          "seniors": {
+            "evitar": {
+              "media": 3.3,
+              "sd": 1.2516655570345725,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 2944.6,
+              "sd": 912.1173413790818,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 9175.9,
+              "sd": 2125.3332000209075,
+              "semillas_que_lo_alcanzan": 10
+            }
+          }
+        },
+        "UCB (película)": {
+          "youth": {
+            "evitar": {
+              "media": 206.6,
+              "sd": 618.7071107469906,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 2015.5,
+              "sd": 293.7664416202474,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 6717.8,
+              "sd": 1117.6232519652287,
+              "semillas_que_lo_alcanzan": 10
+            }
+          },
+          "seniors": {
+            "evitar": {
+              "media": 3.3,
+              "sd": 1.2516655570345725,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 3248.8,
+              "sd": 1285.2265515810388,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 10020.3,
+              "sd": 2220.9304381522425,
+              "semillas_que_lo_alcanzan": 10
+            }
+          }
+        },
+        "Q-learning (género exacto)": {
+          "youth": {
+            "evitar": {
+              "media": 3.1,
+              "sd": 1.1972189997378648,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 332.8,
+              "sd": 319.12825704478826,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 4109.555555555556,
+              "sd": 5658.331691212329,
+              "semillas_que_lo_alcanzan": 9
+            }
+          },
+          "seniors": {
+            "evitar": {
+              "media": 3.3,
+              "sd": 1.2516655570345725,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 3202.6,
+              "sd": 7484.376455880165,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 3202.6,
+              "sd": 7484.376455880165,
+              "semillas_que_lo_alcanzan": 10
+            }
+          }
+        }
+      }
+    },
+    "contiene": {
+      "peliculas_a_evitar": {
+        "youth": 741,
+        "adults": 227,
+        "seniors": 310
+      },
+      "valores_esperados_exactos": {
+        "azar": 0.8846950736909056,
+        "hibrido_top1": 0.8691492004810034,
+        "hibrido_topk_medio": 0.8704073621339057,
+        "oraculo_topk": 0.9508646134581556,
+        "optimo": 1.0,
+        "brecha": 0.11530492630909439
+      },
+      "azar_por_grupo": {
+        "youth": 0.7777,
+        "adults": 0.9546,
+        "seniors": 0.9225
+      },
+      "hibrido_top1_por_grupo": {
+        "youth": 0.7319035487884353,
+        "adults": 0.9602285849643207,
+        "seniors": 0.916203311978726
+      },
+      "agentes": {
+        "Q-learning (película)": {
+          "recompensa_final": {
+            "valor": 0.9989299833774566,
+            "ic95": [
+              0.9987879145467368,
+              0.9990720522081765
+            ],
+            "sd": 0.00019859853107466702,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.99896,
+            "ic95": [
+              0.9987488653314721,
+              0.9991711346685278
+            ],
+            "sd": 0.0002951459149490162,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 279.7600046813488,
+            "ic95": [
+              258.69260006675734,
+              300.82740929594024
+            ],
+            "sd": 29.450200925935256,
+            "n": 10
+          },
+          "valor_voraz_final": {
+            "valor": 1.0,
+            "ic95": [
+              1.0,
+              1.0
+            ],
+            "sd": 0.0,
+            "n": 10
+          },
+          "convergencia_pasos": {
+            "media": 4388.7,
+            "sd": 545.0865476641709,
+            "semillas_que_convergen": 10
+          }
+        },
+        "UCB (película)": {
+          "recompensa_final": {
+            "valor": 0.9478169858455658,
+            "ic95": [
+              0.9458276773443683,
+              0.9498062943467633
+            ],
+            "sd": 0.0027808615316269013,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.9471,
+            "ic95": [
+              0.9447937828245485,
+              0.9494062171754516
+            ],
+            "sd": 0.0032238693108333823,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 7307.3151429057125,
+            "ic95": [
+              7277.266968271836,
+              7337.363317539589
+            ],
+            "sd": 42.00445174021853,
+            "n": 10
+          },
+          "valor_voraz_final": {
+            "valor": 1.0,
+            "ic95": [
+              1.0,
+              1.0
+            ],
+            "sd": 0.0,
+            "n": 10
+          },
+          "convergencia_pasos": {
+            "media": null,
+            "sd": null,
+            "semillas_que_convergen": 0
+          }
+        },
+        "Q-learning (re-ranking top-10)": {
+          "recompensa_final": {
+            "valor": 0.9353519737720489,
+            "ic95": [
+              0.9337512734168496,
+              0.9369526741272483
+            ],
+            "sd": 0.002237624802164032,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.93292,
+            "ic95": [
+              0.9307531520360692,
+              0.9350868479639307
+            ],
+            "sd": 0.0030290445871777975,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 7641.770233225822,
+            "ic95": [
+              7528.242884383933,
+              7755.297582067711
+            ],
+            "sd": 158.7002905743167,
+            "n": 10
+          },
+          "valor_voraz_final": null,
+          "convergencia_pasos": {
+            "media": null,
+            "sd": null,
+            "semillas_que_convergen": 0
+          }
+        },
+        "Q-learning (género exacto)": {
+          "recompensa_final": {
+            "valor": 0.9990229725837707,
+            "ic95": [
+              0.9989058153424861,
+              0.9991401298250553
+            ],
+            "sd": 0.0001637745303173176,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.9989399999999999,
+            "ic95": [
+              0.9986161961726626,
+              0.9992638038273373
+            ],
+            "sd": 0.00045264653858048513,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 238.99000293016434,
+            "ic95": [
+              227.8352916694484,
+              250.14471419088028
+            ],
+            "sd": 15.59321111967203,
+            "n": 10
+          },
+          "valor_voraz_final": {
+            "valor": 1.0,
+            "ic95": [
+              1.0,
+              1.0
+            ],
+            "sd": 0.0,
+            "n": 10
+          },
+          "convergencia_pasos": {
+            "media": 4084.3,
+            "sd": 636.1385331304285,
+            "semillas_que_convergen": 10
+          }
+        },
+        "Q-learning (película, Q0 = 1)": {
+          "recompensa_final": {
+            "valor": 0.9989259898662567,
+            "ic95": [
+              0.9987844339223625,
+              0.9990675458101509
+            ],
+            "sd": 0.00019788156473047098,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.99896,
+            "ic95": [
+              0.9987488653314721,
+              0.9991711346685278
+            ],
+            "sd": 0.0002951459149490162,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 1453.2100193679332,
+            "ic95": [
+              1436.977154047977,
+              1469.4428846878895
+            ],
+            "sd": 22.691981002028715,
+            "n": 10
+          },
+          "valor_voraz_final": {
+            "valor": 1.0,
+            "ic95": [
+              1.0,
+              1.0
+            ],
+            "sd": 0.0,
+            "n": 10
+          },
+          "convergencia_pasos": {
+            "media": 22202.3,
+            "sd": 1032.218974399866,
+            "semillas_que_convergen": 10
+          }
+        }
+      },
+      "descubrimiento_interacciones_del_grupo": {
+        "Q-learning (película)": {
+          "youth": {
+            "evitar": {
+              "media": 32.4,
+              "sd": 50.29071043001436,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": null,
+              "sd": null,
+              "semillas_que_lo_alcanzan": 0
+            },
+            "identificar": {
+              "media": null,
+              "sd": null,
+              "semillas_que_lo_alcanzan": 0
+            }
+          },
+          "adults": {
+            "evitar": {
+              "media": 3.6,
+              "sd": 1.6465452046971292,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": null,
+              "sd": null,
+              "semillas_que_lo_alcanzan": 0
+            },
+            "identificar": {
+              "media": null,
+              "sd": null,
+              "semillas_que_lo_alcanzan": 0
+            }
+          },
+          "seniors": {
+            "evitar": {
+              "media": 97.9,
+              "sd": 150.3687689204998,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": null,
+              "sd": null,
+              "semillas_que_lo_alcanzan": 0
+            },
+            "identificar": {
+              "media": null,
+              "sd": null,
+              "semillas_que_lo_alcanzan": 0
+            }
+          }
+        },
+        "Q-learning (película, Q0 = 1)": {
+          "youth": {
+            "evitar": {
+              "media": 2580.0,
+              "sd": 2634.7799823809873,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 1941.3,
+              "sd": 127.12115830533047,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 4532.7,
+              "sd": 186.55475812151715,
+              "semillas_que_lo_alcanzan": 10
+            }
+          },
+          "adults": {
+            "evitar": {
+              "media": 1403.9,
+              "sd": 2936.9389752673524,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 3359.1,
+              "sd": 267.72766013245626,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 10127.6,
+              "sd": 629.2376692827953,
+              "semillas_que_lo_alcanzan": 10
+            }
+          },
+          "seniors": {
+            "evitar": {
+              "media": 1232.8,
+              "sd": 1832.4897331833054,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 2660.9,
+              "sd": 272.1300546919922,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 7560.4,
+              "sd": 647.3059039846102,
+              "semillas_que_lo_alcanzan": 10
+            }
+          }
+        },
+        "UCB (película)": {
+          "youth": {
+            "evitar": {
+              "media": 2424.9,
+              "sd": 2456.2452126048906,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 1816.2,
+              "sd": 93.8211063673841,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 5231.7,
+              "sd": 111.0625949633809,
+              "semillas_que_lo_alcanzan": 10
+            }
+          },
+          "adults": {
+            "evitar": {
+              "media": 2066.5,
+              "sd": 4352.039502731258,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 3211.9,
+              "sd": 327.34876066835983,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 10191.3,
+              "sd": 716.501228966923,
+              "semillas_que_lo_alcanzan": 10
+            }
+          },
+          "seniors": {
+            "evitar": {
+              "media": 1456.9,
+              "sd": 2834.5686111137106,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 2319.0,
+              "sd": 201.7335977085732,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 7474.5,
+              "sd": 538.5712064754711,
+              "semillas_que_lo_alcanzan": 10
+            }
+          }
+        },
+        "Q-learning (género exacto)": {
+          "youth": {
+            "evitar": {
+              "media": 36.1,
+              "sd": 45.593493687879054,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 1035.6,
+              "sd": 205.4097260490738,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 31485.0,
+              "sd": 2480.5305884024087,
+              "semillas_que_lo_alcanzan": 2
+            }
+          },
+          "adults": {
+            "evitar": {
+              "media": 3.6,
+              "sd": 1.6465452046971292,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 1996.4,
+              "sd": 1063.9306786106363,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": null,
+              "sd": null,
+              "semillas_que_lo_alcanzan": 0
+            }
+          },
+          "seniors": {
+            "evitar": {
+              "media": 14.8,
+              "sd": 29.899089543923502,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 1696.7,
+              "sd": 1361.1687012759783,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 19446.5,
+              "sd": 5486.441515226422,
+              "semillas_que_lo_alcanzan": 2
+            }
+          }
+        }
+      }
+    },
+    "calibrado": {
+      "peliculas_a_evitar": {
+        "youth": 87,
+        "adults": 0,
+        "seniors": 13
+      },
+      "valores_esperados_exactos": {
+        "azar": 0.8978813566977731,
+        "hibrido_top1": 0.8919819723124934,
+        "hibrido_topk_medio": 0.8920705405324829,
+        "oraculo_topk": 0.9011356946225022,
+        "optimo": 0.9015,
+        "brecha": 0.0036186433022268316
+      },
+      "azar_por_grupo": {
+        "youth": 0.8921475000000003,
+        "adults": 0.9015000000000002,
+        "seniors": 0.9000375000000004
+      },
+      "hibrido_top1_por_grupo": {
+        "youth": 0.8734260619704961,
+        "adults": 0.9015000000000002,
+        "seniors": 0.901197434425239
+      },
+      "agentes": {
+        "Q-learning (película)": {
+          "recompensa_final": {
+            "valor": 0.9014738202095032,
+            "ic95": [
+              0.9014522343348836,
+              0.9014954060841227
+            ],
+            "sd": 3.017497201654748e-05,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.90168,
+            "ic95": [
+              0.8991010085479104,
+              0.9042589914520897
+            ],
+            "sd": 0.0036051814563671423,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 15.856829905506753,
+            "ic95": [
+              10.945630070728011,
+              20.768029740285495
+            ],
+            "sd": 6.8653839695791525,
+            "n": 10
+          },
+          "valor_voraz_final": {
+            "valor": 0.9015000000000001,
+            "ic95": [
+              0.9015,
+              0.9015000000000002
+            ],
+            "sd": 1.1702778228589004e-16,
+            "n": 10
+          },
+          "convergencia_pasos": {
+            "media": 3895.5,
+            "sd": 1070.817574462512,
+            "semillas_que_convergen": 10
+          }
+        },
+        "UCB (película)": {
+          "recompensa_final": {
+            "valor": 0.8991882026195526,
+            "ic95": [
+              0.8989446499588262,
+              0.899431755280279
+            ],
+            "sd": 0.0003404631432136254,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.8991399999999998,
+            "ic95": [
+              0.89641033035689,
+              0.9018696696431097
+            ],
+            "sd": 0.0038158150432698254,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 265.9954963862864,
+            "ic95": [
+              261.35252543849873,
+              270.63846733407405
+            ],
+            "sd": 6.490425840633518,
+            "n": 10
+          },
+          "valor_voraz_final": {
+            "valor": 0.9015000000000001,
+            "ic95": [
+              0.9015,
+              0.9015000000000002
+            ],
+            "sd": 1.1702778228589004e-16,
+            "n": 10
+          },
+          "convergencia_pasos": {
+            "media": null,
+            "sd": null,
+            "semillas_que_convergen": 0
+          }
+        },
+        "Q-learning (re-ranking top-10)": {
+          "recompensa_final": {
+            "valor": 0.8968730628490448,
+            "ic95": [
+              0.8963275707254292,
+              0.8974185549726603
+            ],
+            "sd": 0.0007625454078413322,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.8974800000000002,
+            "ic95": [
+              0.894956277790972,
+              0.9000037222090284
+            ],
+            "sd": 0.0035279203820696037,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 568.2696085512605,
+            "ic95": [
+              550.7780462812823,
+              585.7611708212387
+            ],
+            "sd": 24.45151801008202,
+            "n": 10
+          },
+          "valor_voraz_final": null,
+          "convergencia_pasos": {
+            "media": null,
+            "sd": null,
+            "semillas_que_convergen": 0
+          }
+        },
+        "Q-learning (género exacto)": {
+          "recompensa_final": {
+            "valor": 0.9014932572841644,
+            "ic95": [
+              0.9014857098528345,
+              0.9015008047154943
+            ],
+            "sd": 1.055058148859454e-05,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.90174,
+            "ic95": [
+              0.8992137106748402,
+              0.9042662893251597
+            ],
+            "sd": 0.0035315089629725798,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 3.802333819862983,
+            "ic95": [
+              0.2613418134745862,
+              7.343325826251379
+            ],
+            "sd": 4.949965502302155,
+            "n": 10
+          },
+          "valor_voraz_final": {
+            "valor": 0.9015000000000001,
+            "ic95": [
+              0.9015,
+              0.9015000000000002
+            ],
+            "sd": 1.1702778228589004e-16,
+            "n": 10
+          },
+          "convergencia_pasos": {
+            "media": 2000.0,
+            "sd": 0.0,
+            "semillas_que_convergen": 10
+          }
+        },
+        "Q-learning (película, Q0 = 1)": {
+          "recompensa_final": {
+            "valor": 0.9006760776042938,
+            "ic95": [
+              0.9003469690774077,
+              0.9010051861311799
+            ],
+            "sd": 0.00046006199722010776,
+            "n": 10
+          },
+          "recompensa_real_final": {
+            "valor": 0.9010199999999999,
+            "ic95": [
+              0.8983201554667737,
+              0.9037198445332262
+            ],
+            "sd": 0.0037741224145488674,
+            "n": 10
+          },
+          "regret_acumulado": {
+            "valor": 133.74729048609416,
+            "ic95": [
+              124.75080053608721,
+              142.7437804361011
+            ],
+            "sd": 12.57622576215945,
+            "n": 10
+          },
+          "valor_voraz_final": {
+            "valor": 0.9015000000000001,
+            "ic95": [
+              0.9015,
+              0.9015000000000002
+            ],
+            "sd": 1.1702778228589004e-16,
+            "n": 10
+          },
+          "convergencia_pasos": {
+            "media": 25710.4,
+            "sd": 1575.0624820057844,
+            "semillas_que_convergen": 10
+          }
+        }
+      },
+      "descubrimiento_interacciones_del_grupo": {
+        "Q-learning (película)": {
+          "youth": {
+            "evitar": {
+              "media": 1676.2,
+              "sd": 5290.069014462645,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 28027.0,
+              "sd": 0.0,
+              "semillas_que_lo_alcanzan": 1
+            },
+            "identificar": {
+              "media": null,
+              "sd": null,
+              "semillas_que_lo_alcanzan": 0
+            }
+          },
+          "seniors": {
+            "evitar": {
+              "media": 3.3,
+              "sd": 1.2516655570345725,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 19364.0,
+              "sd": 9393.767667980723,
+              "semillas_que_lo_alcanzan": 5
+            },
+            "identificar": {
+              "media": null,
+              "sd": null,
+              "semillas_que_lo_alcanzan": 0
+            }
+          }
+        },
+        "Q-learning (película, Q0 = 1)": {
+          "youth": {
+            "evitar": {
+              "media": 12080.6,
+              "sd": 8382.668763585974,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 2869.8,
+              "sd": 274.7725524057226,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 6657.7,
+              "sd": 645.8603306185221,
+              "semillas_que_lo_alcanzan": 10
+            }
+          },
+          "seniors": {
+            "evitar": {
+              "media": 2058.8,
+              "sd": 6501.010465048235,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 3036.2,
+              "sd": 853.175480191502,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 6613.2,
+              "sd": 952.6384180556416,
+              "semillas_que_lo_alcanzan": 10
+            }
+          }
+        },
+        "UCB (película)": {
+          "youth": {
+            "evitar": {
+              "media": 1536.0,
+              "sd": 2519.3634557606456,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 2794.4,
+              "sd": 460.2803976321873,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 21986.6,
+              "sd": 6749.848314345047,
+              "semillas_que_lo_alcanzan": 10
+            }
+          },
+          "seniors": {
+            "evitar": {
+              "media": 3.3,
+              "sd": 1.2516655570345725,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 2856.1,
+              "sd": 1011.6054841466388,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 14235.9,
+              "sd": 9811.771699228319,
+              "semillas_que_lo_alcanzan": 10
+            }
+          }
+        },
+        "Q-learning (género exacto)": {
+          "youth": {
+            "evitar": {
+              "media": 122.1,
+              "sd": 376.97994346885065,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 369.7,
+              "sd": 320.6614864446444,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 4318.375,
+              "sd": 7137.583643492883,
+              "semillas_que_lo_alcanzan": 8
+            }
+          },
+          "seniors": {
+            "evitar": {
+              "media": 3.3,
+              "sd": 1.2516655570345725,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar_50": {
+              "media": 3203.6,
+              "sd": 7483.928086239205,
+              "semillas_que_lo_alcanzan": 10
+            },
+            "identificar": {
+              "media": 3203.6,
+              "sd": 7483.928086239205,
+              "semillas_que_lo_alcanzan": 10
+            }
+          }
+        }
+      }
+    }
+  },
+  "separacion_q": {
+    "original": {
+      "Q-learning (película)": {
+        "youth": {
+          "valor": 0.701288363602937,
+          "ic95": [
+            0.6777200487888564,
+            0.7248566784170176
+          ],
+          "sd": 0.032946232317560165,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 0.6396633108267353,
+          "ic95": [
+            0.588416960971722,
+            0.6909096606817486
+          ],
+          "sd": 0.07163745736888832,
+          "n": 10
+        }
+      },
+      "Q-learning (película, Q0 = 1)": {
+        "youth": {
+          "valor": 1.0,
+          "ic95": [
+            1.0,
+            1.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 1.0,
+          "ic95": [
+            1.0,
+            1.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        }
+      },
+      "Q-learning (género exacto)": {
+        "youth": {
+          "valor": 0.8398538440772617,
+          "ic95": [
+            0.707896087843168,
+            0.9718116003113554
+          ],
+          "sd": 0.18446422356829115,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 0.7804243217462494,
+          "ic95": [
+            0.6561056807996251,
+            0.9047429626928738
+          ],
+          "sd": 0.1737854767445587,
+          "n": 10
+        }
+      }
+    },
+    "contiene": {
+      "Q-learning (película)": {
+        "youth": {
+          "valor": 0.7040648473993307,
+          "ic95": [
+            0.6878851344431945,
+            0.7202445603554669
+          ],
+          "sd": 0.022617679120860684,
+          "n": 10
+        },
+        "adults": {
+          "valor": 0.6455112017585751,
+          "ic95": [
+            0.6288672668789022,
+            0.6621551366382481
+          ],
+          "sd": 0.023266616622773684,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 0.6776266062863553,
+          "ic95": [
+            0.6671390812803684,
+            0.6881141312923422
+          ],
+          "sd": 0.01466054904685151,
+          "n": 10
+        }
+      },
+      "Q-learning (película, Q0 = 1)": {
+        "youth": {
+          "valor": 1.0,
+          "ic95": [
+            1.0,
+            1.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        },
+        "adults": {
+          "valor": 0.9997797356828194,
+          "ic95": [
+            0.9992814631800004,
+            1.0002780081856384
+          ],
+          "sd": 0.0006965369295525119,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 1.0,
+          "ic95": [
+            1.0,
+            1.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        }
+      },
+      "Q-learning (género exacto)": {
+        "youth": {
+          "valor": 0.8158690041497794,
+          "ic95": [
+            0.7990889958805553,
+            0.8326490124190035
+          ],
+          "sd": 0.023456834105005733,
+          "n": 10
+        },
+        "adults": {
+          "valor": 0.7423428146429942,
+          "ic95": [
+            0.7092313817723385,
+            0.77545424751365
+          ],
+          "sd": 0.046286591482229356,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 0.7803192230409525,
+          "ic95": [
+            0.7470376098982211,
+            0.8136008361836838
+          ],
+          "sd": 0.04652448709860665,
+          "n": 10
+        }
+      }
+    },
+    "calibrado": {
+      "Q-learning (película)": {
+        "youth": {
+          "valor": 0.5681029141649276,
+          "ic95": [
+            0.5478477432763155,
+            0.5883580850535398
+          ],
+          "sd": 0.028314776469695276,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 0.523077248085046,
+          "ic95": [
+            0.44417317851889965,
+            0.6019813176511923
+          ],
+          "sd": 0.11030028354738777,
+          "n": 10
+        }
+      },
+      "Q-learning (película, Q0 = 1)": {
+        "youth": {
+          "valor": 0.5206418149085371,
+          "ic95": [
+            0.49078504491644526,
+            0.550498584900629
+          ],
+          "sd": 0.04173688650084302,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 0.5121385706492089,
+          "ic95": [
+            0.4825981771964547,
+            0.541678964101963
+          ],
+          "sd": 0.041294622594956205,
+          "n": 10
+        }
+      },
+      "Q-learning (género exacto)": {
+        "youth": {
+          "valor": 0.6896582050723132,
+          "ic95": [
+            0.5392706870011715,
+            0.8400457231434549
+          ],
+          "sd": 0.21022725413838225,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 0.6087118673185603,
+          "ic95": [
+            0.4076334901543597,
+            0.8097902444827609
+          ],
+          "sd": 0.2810881889668182,
+          "n": 10
+        }
+      }
+    }
+  },
+  "segmento_probado_pct": {
+    "original": {
+      "Q-learning (película)": {
+        "youth": {
+          "valor": 52.18390804597701,
+          "ic95": [
+            48.56435032169491,
+            55.803465770259116
+          ],
+          "sd": 5.059792802825802,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 53.07692307692308,
+          "ic95": [
+            41.34633401583649,
+            64.80751213800967
+          ],
+          "sd": 16.398232774686647,
+          "n": 10
+        }
+      },
+      "Q-learning (película, Q0 = 1)": {
+        "youth": {
+          "valor": 100.0,
+          "ic95": [
+            100.0,
+            100.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 100.0,
+          "ic95": [
+            100.0,
+            100.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        }
+      },
+      "Q-learning (género exacto)": {
+        "youth": {
+          "valor": 100.0,
+          "ic95": [
+            100.0,
+            100.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 100.0,
+          "ic95": [
+            100.0,
+            100.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        }
+      }
+    },
+    "contiene": {
+      "Q-learning (película)": {
+        "youth": {
+          "valor": 51.72739541160595,
+          "ic95": [
+            50.88818725003336,
+            52.56660357317853
+          ],
+          "sd": 1.1731321170847866,
+          "n": 10
+        },
+        "adults": {
+          "valor": 52.68722466960353,
+          "ic95": [
+            50.70969722783846,
+            54.6647521113686
+          ],
+          "sd": 2.7643927461380557,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 52.354838709677416,
+          "ic95": [
+            51.25055968888543,
+            53.4591177304694
+          ],
+          "sd": 1.5436756276135994,
+          "n": 10
+        }
+      },
+      "Q-learning (película, Q0 = 1)": {
+        "youth": {
+          "valor": 100.0,
+          "ic95": [
+            100.0,
+            100.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        },
+        "adults": {
+          "valor": 100.0,
+          "ic95": [
+            100.0,
+            100.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 100.0,
+          "ic95": [
+            100.0,
+            100.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        }
+      },
+      "Q-learning (género exacto)": {
+        "youth": {
+          "valor": 97.8813559322034,
+          "ic95": [
+            96.84109461544143,
+            98.92161724896538
+          ],
+          "sd": 1.454185048162005,
+          "n": 10
+        },
+        "adults": {
+          "valor": 96.66666666666666,
+          "ic95": [
+            95.1641423168039,
+            98.16919101652941
+          ],
+          "sd": 2.100384210066429,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 97.41935483870968,
+          "ic95": [
+            96.30467672769792,
+            98.53403294972144
+          ],
+          "sd": 1.5582125533537,
+          "n": 10
+        }
+      }
+    },
+    "calibrado": {
+      "Q-learning (película)": {
+        "youth": {
+          "valor": 52.18390804597701,
+          "ic95": [
+            48.56435032169491,
+            55.803465770259116
+          ],
+          "sd": 5.059792802825802,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 53.07692307692308,
+          "ic95": [
+            41.34633401583649,
+            64.80751213800967
+          ],
+          "sd": 16.398232774686647,
+          "n": 10
+        }
+      },
+      "Q-learning (película, Q0 = 1)": {
+        "youth": {
+          "valor": 100.0,
+          "ic95": [
+            100.0,
+            100.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 100.0,
+          "ic95": [
+            100.0,
+            100.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        }
+      },
+      "Q-learning (género exacto)": {
+        "youth": {
+          "valor": 100.0,
+          "ic95": [
+            100.0,
+            100.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        },
+        "seniors": {
+          "valor": 100.0,
+          "ic95": [
+            100.0,
+            100.0
+          ],
+          "sd": 0.0,
+          "n": 10
+        }
+      }
+    }
+  },
+  "simulador_vs_datos": [
+    {
+      "grupo": "youth × Drama/Horror EXACTO",
+      "n": 2937,
+      "abandono_datos": 0.20599250936329588,
+      "ic95_inf": 0.19175452378932933,
+      "ic95_sup": 0.2209986146319987,
+      "abandono_simulador_original": 0.3
+    },
+    {
+      "grupo": "seniors × Comedy/Romance EXACTO",
+      "n": 474,
+      "abandono_datos": 0.2109704641350211,
+      "ic95_inf": 0.17663804373250155,
+      "ic95_sup": 0.24995018131948218,
+      "abandono_simulador_original": 0.25
+    },
+    {
+      "grupo": "adults × Action/Sci-Fi EXACTO",
+      "n": 0,
+      "abandono_datos": NaN,
+      "ic95_inf": NaN,
+      "ic95_sup": NaN,
+      "abandono_simulador_original": 0.2
+    },
+    {
+      "grupo": "solo CONTIENE el género (no exacto)",
+      "n": 39541,
+      "abandono_datos": 0.09941579626210768,
+      "ic95_inf": 0.09650527627096184,
+      "ic95_sup": 0.1024041460897033,
+      "abandono_simulador_original": 0.0
+    },
+    {
+      "grupo": "resto (sin relación con el segmento)",
+      "n": 57671,
+      "abandono_datos": 0.09847236912833139,
+      "ic95_inf": 0.09606726928822115,
+      "ic95_sup": 0.1009309587918712,
+      "abandono_simulador_original": 0.0
+    }
+  ],
+  "tiempos_seccion_s": {
+    "1_entorno": 0.1,
+    "1_entorno_nile": 0.0,
+    "1_simulador_vs_datos": 0.3,
+    "2_modos_y_baselines": 1.0,
+    "2_montecarlo": 33.9,
+    "2_figura_entorno": 0.6,
+    "3_ajuste": 104.3,
+    "4_entrenamiento": 131.2,
+    "4_resumen": 0.2,
+    "4_figuras_curvas": 1.7,
+    "4_mejora": 0.0,
+    "5_descubrimiento": 0.0,
+    "5_separacion": 0.0,
+    "5_figura_politica": 0.8
+  }
+}

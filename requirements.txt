@@ -1,0 +1,19 @@
+# Base del proyecto (Python >= 3.11). Versiones fijadas.
+# Las de NLP, RL y recomendación se añaden en su tarea (T03, T04, T06).
+pandas==2.3.3
+numpy==2.3.5
+scikit-learn==1.7.2
+matplotlib==3.10.6
+seaborn==0.13.2
+joblib==1.5.2
+jupyter==1.1.1
+nbconvert==7.16.6
+nbclient==0.10.2
+jupytext==1.19.4
+pytest==8.4.2
+ruff==0.12.0
+scipy==1.18.1
+# NLP (T03). En Colab solo se instala transformers si falta; torch viene preinstalado.
+torch==2.14.1
+transformers==5.19.0
+jinja2==3.1.6

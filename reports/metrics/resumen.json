@@ -1,0 +1,281 @@
+{
+  "modo": "full",
+  "generado": "2026-10-11T17:42:07",
+  "fuente": "reports/metrics/*.json (modo full)",
+  "datos": {
+    "resenas": 50000,
+    "peliculas": 999,
+    "interacciones": 100624,
+    "usuarios": 10000,
+    "abandono_global": 0.10251135426294188,
+    "abandono_global_ic": [
+      0.10065233804126857,
+      0.1044007200883031
+    ],
+    "duplicados_resenas": 422,
+    "tiene_tiempo_visto": false
+  },
+  "sentimiento": {
+    "accuracy": 0.9096409842678499,
+    "accuracy_ic": [
+      0.9041952400161355,
+      0.9151900968132312
+    ],
+    "f1": 0.9083094555873925,
+    "umbral": 0.6,
+    "costo_fp": 2.0,
+    "costo_fn": 1.0,
+    "distilbert_accuracy": 0.896,
+    "distilbert_latencia_ms": 62.011747399985325,
+    "latencia_final_ms": 3.3548399999563117,
+    "resenas_usadas": 49578,
+    "n_test": 9916,
+    "modelos": [
+      {
+        "nombre": "Azar (referencia)",
+        "accuracy": 0.5026220250100847,
+        "ic": [
+          0.4926381605486083,
+          0.5127067365873336
+        ],
+        "final": false
+      },
+      {
+        "nombre": "Naive Bayes",
+        "accuracy": 0.895219846712384,
+        "ic": [
+          0.8894715611133521,
+          0.9010715006050827
+        ],
+        "final": false
+      },
+      {
+        "nombre": "Regresión logística",
+        "accuracy": 0.9115570794675272,
+        "ic": [
+          0.906209661153691,
+          0.9170028237192416
+        ],
+        "final": false
+      },
+      {
+        "nombre": "LinearSVC",
+        "accuracy": 0.9149858814037919,
+        "ic": [
+          0.9098401573215006,
+          0.9206358410649456
+        ],
+        "final": false
+      },
+      {
+        "nombre": "DistilBERT (IA preentrenada)",
+        "accuracy": 0.896,
+        "ic": [
+          0.877,
+          0.914025
+        ],
+        "final": false
+      },
+      {
+        "nombre": "Modelo elegido",
+        "accuracy": 0.9096409842678499,
+        "ic": [
+          0.9041952400161355,
+          0.9151900968132312
+        ],
+        "final": true
+      }
+    ]
+  },
+  "recomendador": {
+    "real": {
+      "Al azar": 0.010552763819095477,
+      "Lo más popular": 0.009949748743718593,
+      "Híbrido (nuestro)": 0.010954773869346734
+    },
+    "sembrada": {
+      "Al azar": 0.009475656648323559,
+      "Lo más popular": 0.017181002824542758,
+      "Híbrido (nuestro)": 0.04703606295385366
+    },
+    "dosis": 0.6,
+    "p_sembrada_vs_popularidad": 4.587627635279215e-36,
+    "azar_teorico": 0.010102121707282901,
+    "cobertura_hibrido": 1.0,
+    "cobertura_popularidad": 0.014014014014014014,
+    "puesto_frio_hibrido": 1,
+    "puesto_frio_colaborativo": 998,
+    "multiplo_sembrada": 2.737678553120513
+  },
+  "abandono": {
+    "auc": 0.5226762955293254,
+    "auc_ic": [
+      0.5095091567837338,
+      0.5360815797269985
+    ],
+    "p_permutacion": 0.019801980198019802,
+    "auc_techo": 0.517787675135895,
+    "razon_equilibrio_segmento": 3.8677494199535967,
+    "umbral": 0.25,
+    "umbral_degenera": true,
+    "razon_equilibrio": 8.841516771998055,
+    "costo_fn": 3.0,
+    "costo_fp": 1.0,
+    "deciles": {
+      "1": 0.0926,
+      "2": 0.0936,
+      "3": 0.0991,
+      "4": 0.1045,
+      "5": 0.106,
+      "6": 0.0887,
+      "7": 0.102,
+      "8": 0.0951,
+      "9": 0.1005,
+      "10": 0.1361
+    },
+    "segmentos": [
+      {
+        "etiqueta": "Mayores · comedia (único género)",
+        "tasa": 0.2202797202797203,
+        "ic95": [
+          0.1761308226284773,
+          0.2718435192189318
+        ],
+        "n": 286,
+        "riesgo": true,
+        "corta": "mayores con comedias puras"
+      },
+      {
+        "etiqueta": "Jóvenes · drama (único género)",
+        "tasa": 0.2055492638731597,
+        "ic95": [
+          0.18735058498584956,
+          0.22502620624789704
+        ],
+        "n": 1766,
+        "riesgo": true,
+        "corta": "jóvenes con dramas puros"
+      },
+      {
+        "etiqueta": "Adultos · comedia (único género)",
+        "tasa": 0.12280701754385964,
+        "ic95": [
+          0.08964099956646662,
+          0.1660063864056371
+        ],
+        "n": 285,
+        "riesgo": false,
+        "corta": "adultos con comedias puras"
+      },
+      {
+        "etiqueta": "Jóvenes · terror (único género)",
+        "tasa": 0.10869565217391304,
+        "ic95": [
+          0.04733076082742689,
+          0.23038103012631456
+        ],
+        "n": 46,
+        "riesgo": false,
+        "corta": "jóvenes con películas de terror puras"
+      },
+      {
+        "etiqueta": "Mayores · drama (único género)",
+        "tasa": 0.09293904646952324,
+        "ic95": [
+          0.07988490663394324,
+          0.10787628624561854
+        ],
+        "n": 1657,
+        "riesgo": false,
+        "corta": "mayores con dramas puros"
+      },
+      {
+        "etiqueta": "Adultos · drama (único género)",
+        "tasa": 0.08248043347381095,
+        "ic95": [
+          0.07019422012483365,
+          0.09669348859171933
+        ],
+        "n": 1661,
+        "riesgo": false,
+        "corta": "adultos con dramas puros"
+      },
+      {
+        "etiqueta": "Jóvenes · comedia (único género)",
+        "tasa": 0.07894736842105263,
+        "ic95": [
+          0.05362355801428046,
+          0.11477993261206765
+        ],
+        "n": 304,
+        "riesgo": false,
+        "corta": "jóvenes con comedias puras"
+      },
+      {
+        "etiqueta": "Media de todas las visualizaciones",
+        "tasa": 0.1030455081662153,
+        "ic95": null,
+        "n": null,
+        "riesgo": false,
+        "referencia": true
+      }
+    ],
+    "tasa_global_train": 0.1030455081662153,
+    "segmentos_riesgo": [
+      {
+        "etiqueta": "Mayores · comedia (único género)",
+        "tasa": 0.2202797202797203,
+        "ic95": [
+          0.1761308226284773,
+          0.2718435192189318
+        ],
+        "n": 286,
+        "riesgo": true,
+        "corta": "mayores con comedias puras"
+      },
+      {
+        "etiqueta": "Jóvenes · drama (único género)",
+        "tasa": 0.2055492638731597,
+        "ic95": [
+          0.18735058498584956,
+          0.22502620624789704
+        ],
+        "n": 1766,
+        "riesgo": true,
+        "corta": "jóvenes con dramas puros"
+      }
+    ],
+    "multiplo_segmento": 1.994742590250542,
+    "decil_top": 0.1361,
+    "decil_resto_media": 0.0980111111111111
+  },
+  "refuerzo": {
+    "original": {
+      "hibrido": 0.9734946284646651,
+      "azar": 0.9901748824821364,
+      "optimo": 1.0,
+      "rl": 0.9999480068683624,
+      "mejora_vs_hibrido": 0.026453357934951783,
+      "regret_rl": 21.475000751018523
+    },
+    "contiene": {
+      "hibrido": 0.8691492004810034,
+      "azar": 0.8846950736909056,
+      "optimo": 1.0,
+      "rl": 0.9989299833774566,
+      "mejora_vs_hibrido": 0.12978077530860901,
+      "regret_rl": 279.7600046813488
+    },
+    "calibrado": {
+      "hibrido": 0.8919819723124934,
+      "azar": 0.8978813566977731,
+      "optimo": 0.9015,
+      "rl": 0.9014738202095032,
+      "mejora_vs_hibrido": 0.00949186086654663,
+      "regret_rl": 15.856829905506753
+    },
+    "evitar_youth": 3.2,
+    "evitar_seniors": 3.3,
+    "n_semillas": 10
+  }
+}

@@ -1,0 +1,7 @@
+# Los CSV no se tocan: sin conversión de fin de línea (su sha256 está en harness/data_manifest.json)
+*.csv -text
+*.pdf binary
+*.png binary
+*.ipynb text eol=lf
+# agent.py tampoco: init.py verifica su sha256
+agent.py -text
